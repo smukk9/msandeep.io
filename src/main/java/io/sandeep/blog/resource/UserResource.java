@@ -19,8 +19,8 @@ public class UserResource {
     @Autowired
     private UserService userService;
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @GetMapping("/check")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/admin")
     public String welcome (){
 
         return "You are admin that isw why you are seeing this";
@@ -33,7 +33,7 @@ public class UserResource {
     Set<Role> userRoles = new HashSet<>();
     Role role =  Role.builder().role("ROLE_ADMIN").build();
     userRoles.add(role);
-    User user =  User.builder().username("smukk9").email("smukk9@gmail.com").password("sandeep").roles(userRoles).build();
+    User user =  User.builder().username("smukk9").email("smukk9@gmail.com").password("sandeep").roles(userRoles).active(1).build();
     userService.save(user);
      return  user;
 

@@ -1,41 +1,51 @@
 package io.sandeep.blog.resource;
 
-import io.sandeep.blog.entity.Role;
+
 import io.sandeep.blog.entity.User;
 import io.sandeep.blog.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.security.Principal;
+import java.util.List;
 
-@RequestMapping("/rest")
+
+@RequestMapping("/api/v1/users")
 @RestController
 public class UserResource {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+
 
     @Autowired
     private UserService userService;
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping("/admin")
-    public String welcome (){
+    @GetMapping
+    public List<User> listAllUsers (Principal principal){
 
-        return "You are admin that isw why you are seeing this";
+        String username = principal.getName();
+
+        logger.info("Requested to list all users by : {}", username);
+
+
+        return userService.getAllUsers();
     }
 
 
-    @GetMapping("/all")
-    public  User hello(){
+    @GetMapping("/{id}")
+    public  String hello(@PathVariable int id){
 
-    Set<Role> userRoles = new HashSet<>();
-    Role role =  Role.builder().role("ROLE_ADMIN").build();
-    userRoles.add(role);
-    User user =  User.builder().username("smukk9").email("smukk9@gmail.com").password("sandeep").roles(userRoles).active(1).build();
-    userService.save(user);
-     return  user;
+        logger.info(" Requested for user with Id : {}", id);
+        return "willl send you single user";
+
 
     }
 }

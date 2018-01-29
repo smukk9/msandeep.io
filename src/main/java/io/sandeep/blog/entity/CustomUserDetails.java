@@ -21,6 +21,7 @@ import java.util.List;
 public class CustomUserDetails extends User implements UserDetails{
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     public CustomUserDetails(final User users){
         super(users);
     }

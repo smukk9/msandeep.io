@@ -14,8 +14,6 @@ import java.util.List;
 /*
     * TO-DO: Implement boolean methods later.
     * Check for null values on the getAuthoritiess
-
-
  */
 
 public class CustomUserDetails extends User implements UserDetails{
@@ -29,13 +27,13 @@ public class CustomUserDetails extends User implements UserDetails{
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
-     final List<GrantedAuthority> authorities = new ArrayList<>();
-     logger.info("Display user roles: {}",this.getRoles());
-     for (final Role role : this.getRoles()){
+        final List<GrantedAuthority> authorities = new ArrayList<>();
+        logger.info("Display user roles: {}",this.getRoles());
+        for (final Role role : this.getRoles()){
 
-         authorities.add(new SimpleGrantedAuthority(role.getRole()));
-     }
-     return authorities;
+            authorities.add(new SimpleGrantedAuthority(role.getRole()));
+        }
+        return authorities;
     }
 
     @Override

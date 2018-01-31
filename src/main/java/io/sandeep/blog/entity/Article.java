@@ -4,11 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Set;
 
@@ -34,8 +38,8 @@ public class Article {
     @NotNull
     private String content;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="user_id", referencedColumnName = "user_id")
+    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinColumn(name="user_id")
     protected User author;
 
     @NotNull
@@ -43,14 +47,15 @@ public class Article {
     @JoinTable(name = "article_tag", joinColumns = @JoinColumn(name = "article_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private Set<Tag> tags;
 
-    @Column(name = "created_date")
-    @NotNull
-    @CreatedDate
-    protected Date createdDate;
+    @CreationTimestamp
+    @Temporal(TemporalType.DATE)
+    @Column(name = "create_date")
+    private Date createDate;
 
-    @Column(name = "lastmodified_date")
-    @LastModifiedDate
-    protected Date lastModifiedDate;
+    @UpdateTimestamp
+    @Temporal(TemporalType.DATE)
+    @Column(name = "modify_date")
+    private Date modifyDate;
 
 
 }

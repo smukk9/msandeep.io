@@ -1,18 +1,19 @@
 package io.sandeep.blog.service;
 
+
+
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
 
 public class ArticleServiceImplTest {
 
-    private UserService userService;
+    private ArticleService articleService;
 
     @Before
     public void setUp() throws Exception {
 
-        userService = new UserServiceImp();
+        articleService = new ArticleServiceImpl();
     }
 
     @Test
@@ -23,6 +24,8 @@ public class ArticleServiceImplTest {
 
     @Test
     public void getArticleById() throws Exception {
+
+
     }
 
     @Test

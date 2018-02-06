@@ -1,5 +1,6 @@
 package io.sandeep.blog.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import io.sandeep.blog.entity.Article;
 
 import java.util.List;
@@ -11,5 +12,5 @@ public interface ArticleService {
      Optional<Article> getArticleById(int id);
      boolean deleteArticleById(int id);
      Article save(Article article);
-
+     Article saveJsonArticle(JsonNode actualObj);
 }

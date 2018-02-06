@@ -51,8 +51,8 @@ public class BlogApplicationRunner implements ApplicationRunner  {
         logger.info("*****Seeding article data************ ");
 
         Set<Tag> tagList = new HashSet<>();
-        Tag spring = Tag.builder().tag("Spring").build();
-        Tag springboot = Tag.builder().tag("SpringBoot").build();
+        Tag spring = Tag.builder().tagName("Spring").build();
+        Tag springboot = Tag.builder().tagName("SpringBoot").build();
         tagList.add(spring);
         tagList.add(springboot);
 
@@ -64,9 +64,9 @@ public class BlogApplicationRunner implements ApplicationRunner  {
                 .build();
 
         logger.info("user with the error: {}",article1 );
-        Article returntype= articleService.save(article1);
+       // Article returnType= articleService.save(article1);
         logger.info("saved article : {}", article1);
-        logger.info("Return type: {}", returntype);
+        //logger.info("Return type: {}", returnType);
         logger.info("*********End Runner***************" );
 
     }

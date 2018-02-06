@@ -1,5 +1,6 @@
 package io.sandeep.blog.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,10 +34,12 @@ public class User {
 
     @Column(name = "password")
     @NotNull
+    @JsonIgnore
     private String password;
 
     @Column(name = "email")
     @NotNull
+
     private String email;
 
     @Column(name = "active")

@@ -25,9 +25,9 @@ public class Tag {
     @NotNull
     private int id;
 
-    @Column(name = "tag")
+    @Column(name = "tagname")
     @NotNull
-    private String tag;
+    private String tagName;
 
     @CreationTimestamp
     @Temporal(TemporalType.DATE)

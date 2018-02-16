@@ -15,10 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Transactional
@@ -71,8 +68,8 @@ public class ArticleServiceImpl implements ArticleService {
         Optional<String > username = Optional.ofNullable(authentication.getName());
 
         User user;
-        if(username.isPresent()){
-            logger.info("checking isde the if");
+        if(!username.isPresent()){
+            logger.info("checking  the if:{}",username.isPresent());
              user = userRepository.findByUsername(username.get());
         }else{
             logger.info("checking else the if");
@@ -81,13 +78,20 @@ public class ArticleServiceImpl implements ArticleService {
 
 
         JsonNode tagCount = article.get("tags");
-        Set<Tag> tagSet = new HashSet<>();
-        if (tagCount.isArray()){
-            for (final JsonNode objNode : tagCount){
+        logger.info("JsonNode from the request: {}", tagCount);
+        List<Tag> tagSet = new LinkedList<>();
+        if (tagCount.isArray()) {
+            for (final JsonNode objNode : tagCount) {
 
                 Optional<Tag> tag = tagRepository.findById(objNode.get("id").asInt());
+                logger.info("Retrieved tag from DB: {}", tag);
                 tag.ifPresent(tagSet::add);
             }
+        }else
+        {
+            Optional<Tag> tag = tagRepository.findById(tagCount.get("id").asInt());
+            logger.info("Retrieved tag from DB: {}", tag);
+            tag.ifPresent(tagSet::add);
         }
 
 

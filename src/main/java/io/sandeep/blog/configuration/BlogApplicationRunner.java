@@ -4,6 +4,7 @@ import io.sandeep.blog.entity.Article;
 import io.sandeep.blog.entity.Role;
 import io.sandeep.blog.entity.Tag;
 import io.sandeep.blog.entity.User;
+import io.sandeep.blog.repository.TagRepository;
 import io.sandeep.blog.service.ArticleService;
 import io.sandeep.blog.service.UserService;
 import org.slf4j.Logger;
@@ -14,9 +15,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 
-
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /*
  *
@@ -35,6 +34,9 @@ public class BlogApplicationRunner implements ApplicationRunner  {
     @Autowired
     private ArticleService articleService;
 
+    @Autowired
+    private TagRepository tagRepository;
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
 
@@ -50,9 +52,11 @@ public class BlogApplicationRunner implements ApplicationRunner  {
 
         logger.info("*****Seeding article data************ ");
 
-        Set<Tag> tagList = new HashSet<>();
+        List<Tag> tagList = new LinkedList<>();
         Tag spring = Tag.builder().tagName("Spring").build();
         Tag springboot = Tag.builder().tagName("SpringBoot").build();
+        tagRepository.save(spring);
+        tagRepository.save(springboot);
         tagList.add(spring);
         tagList.add(springboot);
 
@@ -64,9 +68,9 @@ public class BlogApplicationRunner implements ApplicationRunner  {
                 .build();
 
         logger.info("user with the error: {}",article1 );
-       // Article returnType= articleService.save(article1);
+        Article returnType= articleService.save(article1);
         logger.info("saved article : {}", article1);
-        //logger.info("Return type: {}", returnType);
+       logger.info("Return type: {}", returnType);
         logger.info("*********End Runner***************" );
 
     }

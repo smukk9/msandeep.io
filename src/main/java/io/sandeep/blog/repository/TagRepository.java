@@ -11,8 +11,9 @@ import java.util.Optional;
 public interface TagRepository extends JpaRepository<Tag, Integer> {
 
      List<Tag> findAll();
-
+     Tag save(Tag tag);
      Optional<Tag> findById(int id);
+     boolean existsByTagName(String tagName);
 
 
 

@@ -7,15 +7,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -37,17 +32,18 @@ public class Article {
 
     @Column(name = "content")
     @NotNull
+    @Lob
     private String content;
 
-    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="user_id")
     @JsonIgnore
     protected User author;
 
     @NotNull
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "article_tag", joinColumns = @JoinColumn(name = "article_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    private Set<Tag> tags;
+    private List<Tag> tags;
 
     @CreationTimestamp
     @Temporal(TemporalType.DATE)

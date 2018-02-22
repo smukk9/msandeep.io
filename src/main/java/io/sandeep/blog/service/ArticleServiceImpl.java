@@ -5,6 +5,7 @@ import io.sandeep.blog.configuration.AuthenticationFacade;
 import io.sandeep.blog.entity.Article;
 import io.sandeep.blog.entity.Tag;
 import io.sandeep.blog.entity.User;
+import io.sandeep.blog.enums.JsonKeys;
 import io.sandeep.blog.repository.ArticleRepository;
 import io.sandeep.blog.repository.TagRepository;
 import io.sandeep.blog.repository.UserRepository;
@@ -77,7 +78,7 @@ public class ArticleServiceImpl implements ArticleService {
         }
 
 
-        JsonNode tagCount = article.get("tags");
+        JsonNode tagCount = article.get(JsonKeys.TAGS.getValue());
         logger.info("JsonNode from the request: {}", tagCount);
         List<Tag> tagSet = new LinkedList<>();
         if (tagCount.isArray()) {
@@ -98,8 +99,8 @@ public class ArticleServiceImpl implements ArticleService {
 
         Article newArticle = Article.builder()
                 .author(user)
-                .title(article.get("title").toString())
-                .content(article.get("content").toString())
+                .title(article.get(JsonKeys.TITLE.getValue()).toString())
+                .content(article.get(JsonKeys.CONTENT.getValue()).toString())
                 .tags(tagSet)
                 .build();
 

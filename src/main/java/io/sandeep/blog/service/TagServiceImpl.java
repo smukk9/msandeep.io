@@ -2,6 +2,7 @@ package io.sandeep.blog.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import io.sandeep.blog.entity.Tag;
+import io.sandeep.blog.enums.JsonKeys;
 import io.sandeep.blog.repository.TagRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,7 +62,8 @@ public class TagServiceImpl implements TagService {
     @Override
     public boolean saveJsonTag(JsonNode actualObj) {
 
-        JsonNode tagName = actualObj.get("tagnames");
+        JsonNode tagName = actualObj.get(JsonKeys.TAGNAME.getValue());
+        logger.info("Json Tag name from Enum: {}", JsonKeys.TAGNAME.getValue());
         logger.info("JsonNode from the request: {}", tagName);
 
         if(tagName.isArray()){

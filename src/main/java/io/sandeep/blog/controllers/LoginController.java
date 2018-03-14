@@ -12,4 +12,11 @@ public class LoginController {
     public String index(ModelMap map) {
         return "index";
     }
+
+    @RequestMapping("/article")
+    public String article(ModelMap map){ return "/article/article";}
+
+
+    @RequestMapping("/admin")
+    public String admin(ModelMap map){ return "/admin/admin";}
 }

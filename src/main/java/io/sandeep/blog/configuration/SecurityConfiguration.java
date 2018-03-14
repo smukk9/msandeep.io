@@ -40,7 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.headers().frameOptions().disable();
         http.authorizeRequests()
-                .antMatchers( "/css/**" , "/js/**" , "/images/**" , "/webjars/**" , "/static/**","**/favicon.ico" , "/index" ).permitAll()
+                .antMatchers( "/css/**" , "/js/**" , "/images/**" , "/webjars/**" , "/static/**","**/favicon.ico" , "/index","/article" ).permitAll()
                 .antMatchers("/admin/**").authenticated()
                 .antMatchers("/manage/**").authenticated()
                 .antMatchers("/h2/**").permitAll()

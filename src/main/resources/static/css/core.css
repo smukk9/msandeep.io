@@ -1,0 +1,38 @@
+body {
+    font-family: 'Roboto';
+    font-size: 22px;
+}
+
+.nav-color{
+    background-color: #3e454c;
+}
+
+.menu-item{
+    background-color: #2c3136;
+}
+.menu-color{
+    background-color: #889196;
+}
+
+.menu-brg{
+    background-color: #FFFFFF;
+}
+
+.content-brg{
+    background-color: #F0F8FF;
+}
+pre, code {
+    font-family: monospace, monospace;
+}
+pre {
+    overflow: auto;
+}
+pre > code {
+    display: block;
+    padding: 1rem;
+    word-wrap: normal;
+}
+li.L0, li.L1, li.L2, li.L3,
+li.L5, li.L6, li.L7, li.L8 {
+    list-style-type: decimal !important;
+}

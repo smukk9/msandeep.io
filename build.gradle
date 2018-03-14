@@ -7,16 +7,20 @@ buildscript {
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath 'se.transmode.gradle:gradle-docker:1.2'
 	}
 }
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'docker'
+apply plugin: 'application'
 
 group = 'io.sandeep'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
+mainClassName = 'io.sandeep.blog.BlogApplication'
 
 repositories {
 	mavenCentral()
@@ -38,5 +42,12 @@ dependencies {
 	testCompile('org.springframework.security:spring-security-test')
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-thymeleaf
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '1.5.10.RELEASE'
+	compile 'org.webjars.npm:bulma:0.6.2'
+	compile 'org.webjars:jquery:3.3.1-1'
+	compile 'org.webjars:bootstrap:4.0.0-2'
+}
 
+distDocker {
+	exposePort 8595
+	setEnvironment 'JAVA_OPTS', '-Dspring.profiles.active=docker'
 }

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="headerFragment">
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="/css/core.css"/>
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' />
+    <link rel="stylesheet" type="text/css" th:href="@{webjars/bulma/0.6.2/css/bulma.css}" />
+</head>
+
+<div th:fragment="before-body-scripts">
+    <script th:src="@{webjars/jquery/3.3.1-1/jquery.min.js}"></script>
+    <script  src="https://rawgit.com/google/code-prettify/master/loader/run_prettify.js?autoload=true&amp;skin=sunburst&amp;" defer=""></script>
+</div>
+</html>

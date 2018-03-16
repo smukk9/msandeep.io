@@ -19,4 +19,8 @@ public class LoginController {
 
     @RequestMapping("/admin")
     public String admin(ModelMap map){ return "/admin/admin";}
+
+    @RequestMapping("/admin/editor")
+    public String editor(ModelMap map){ return "/admin/editor";}
 }
+

@@ -42,9 +42,12 @@ dependencies {
 	testCompile('org.springframework.security:spring-security-test')
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-thymeleaf
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '1.5.10.RELEASE'
+    compile('org.thymeleaf.extras:thymeleaf-extras-springsecurity4')
+    //Webjars
 	compile 'org.webjars.npm:bulma:0.6.2'
 	compile 'org.webjars:jquery:3.3.1-1'
 	compile 'org.webjars:bootstrap:4.0.0-2'
+    compile 'org.webjars:font-awesome:5.0.6'
 }
 
 distDocker {

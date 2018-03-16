@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/headerFragment ::headerFragment"></head>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.js"></script>
+
+<body>
+
+<nav th:replace="fragments/navbarFragment :: navbarFragment" />
+
+<section class="container">
+    <div class="space">
+        <div class="field">
+            <div class="control">
+                <input class="input is-primary" type="text" placeholder="Article Title" />
+            </div>
+        </div>
+    </div>
+
+    <div id="summernote"></div>
+    <br/>
+
+    <div class="field is-grouped">
+        <p class="control">
+            <a class="button is-link">
+                <span>Save Changes</span>
+    <span class="icon is-small">
+      <i class="fas fa-check"></i>
+    </span>
+
+            </a>
+            <a class="button is-danger is-outlined">
+                <span>Clear</span>
+                <span class="icon is-small">
+      <i class="fas fa-times"></i>
+    </span>
+            </a>
+
+            <a class="button is-danger is-outlined">
+                <span>Undo</span>
+                <span class="icon is-small">
+      <i class="fas fa-undo"></i>
+    </span>
+            </a>
+
+            <a class="button is-danger is-outlined">
+                <span>Redo</span>
+                <span class="icon is-small">
+     <i class="fas fa-redo"></i>
+    </span>
+            </a>
+        </p>
+    </div>
+
+
+
+
+
+</section>
+<br/>
+
+
+<script>
+    $('#summernote').summernote({
+        placeholder: 'Hi Sandeep, Write something today',
+
+        tabsize: 2,
+        codemirror: { // codemirror options
+            theme: 'monokai'
+        },
+        height: 620,
+
+
+        disableResizeEditor: true
+    });
+    var save = function() {
+        var markup = $('#summernote').summernote('code');
+        console.log(markup);
+        $('#summernote').summernote('insertText', 'hello world');
+    };</script>
+</body>
+<footer th:replace="fragments/footerFragment :: footerFragment"></footer>
+
+
+</html>

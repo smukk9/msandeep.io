@@ -22,5 +22,8 @@ public class LoginController {
 
     @RequestMapping("/admin/editor")
     public String editor(ModelMap map){ return "/admin/editor";}
+
+    @RequestMapping("/tag")
+    public String tags(ModelMap map){ return "/tag/tag";}
 }
 

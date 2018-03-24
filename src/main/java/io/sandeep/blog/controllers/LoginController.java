@@ -25,5 +25,8 @@ public class LoginController {
 
     @RequestMapping("/tag")
     public String tags(ModelMap map){ return "/tag/tag";}
+
+    @RequestMapping("/archive")
+    public String archive(ModelMap map){ return "/archive/archive";}
 }
 

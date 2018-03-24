@@ -62,7 +62,7 @@ public class BlogApplicationRunner implements ApplicationRunner  {
 
         Article article1 = Article.builder()
                 .author(user)
-                .title("Learn SpringBoot")
+                .title("Learn SpringBoot with me ")
                 .content("Trying learning lorem is the works is the kdiend infn dlldfjjnfdknffnl lkehduda")
                 .tags(tagList)
                 .build();

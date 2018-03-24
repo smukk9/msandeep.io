@@ -5,6 +5,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.js"></script>
 
+
 <body>
 
 <nav th:replace="fragments/navbarFragment :: navbarFragment" />
@@ -13,14 +14,72 @@
     <div class="space">
         <div class="field">
             <div class="control">
-                <input class="input is-primary" type="text" placeholder="Article Title" />
+                <input class="input is-primary" id="article-title" type="text" placeholder="Article Title" />
             </div>
         </div>
     </div>
 
     <div id="summernote"></div>
     <br/>
+    <div class="control">
+        <input class="input is-primary" id="tagline" type="text" placeholder="Add tags" />
+    </div>
+    <br/>
+    <div class="tag">
+    <div class="field is-grouped is-grouped-multiline" id="addtag">
+        <div class="control">
+            <div class="tags has-addons">
+                <a class="tag is-link">Technology</a>
+                <a class="tag is-delete"></a>
+            </div>
+        </div>
 
+        <div class="control">
+            <div class="tags has-addons">
+                <a class="tag is-link">CSS</a>
+                <a class="tag is-delete"></a>
+            </div>
+        </div>
+
+        <div class="control">
+            <div class="tags has-addons">
+                <a class="tag is-link">Flexbox</a>
+                <a class="tag is-delete" onclick="removeTag()"></a>
+            </div>
+        </div>
+
+        <div class="control">
+            <div class="tags has-addons">
+                <a class="tag is-link">Web Design</a>
+                <a class="tag is-delete"></a>
+            </div>
+        </div>
+
+        <div class="control">
+            <div class="tags has-addons">
+                <a class="tag is-link">Open Source</a>
+                <a class="tag is-delete"></a>
+            </div>
+        </div>
+
+        <div class="control">
+            <div class="tags has-addons">
+                <a class="tag is-link">Community</a>
+                <a class="tag is-delete"></a>
+            </div>
+        </div>
+
+        <div class="control">
+            <div class="tags has-addons">
+                <a class="tag is-link">Documentation</a>
+                <a class="tag is-delete"></a>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <br/>
+    <br/>
     <nav class="level">
         <div class="level-left">
         <div class="level-item has-text-centered">
@@ -29,13 +88,13 @@
                     <a class="button is-danger  ">
                         <span>Undo</span>
                         <span class="icon is-small">
-      <i class="fas fa-undo"></i>
+                            <i class="fas fa-undo"></i>
                         </span>
                     </a>
                     <a class="button is-danger is-hoverable">
                         <span>Redo</span>
                         <span class="icon is-small">
-      <i class="fas redo"></i>
+                            <i class="fas redo"></i>
                         </span>
                     </a>
                 </p>
@@ -50,7 +109,7 @@
                         <span>Clear</span>
                         <span class="icon is-small"><i class="fas fa-times"></i></span>
                     </a>
-                    <a class="button is-link">
+                    <a class="button is-link" id="submit">
                         <span>Save Changes</span>
                         <span class="icon is-small">
                                 <i class="fas fa-check"></i>
@@ -70,27 +129,11 @@
 </section>
 <br/>
 
+<script th:src="@{/js/editor.js}"></script>
 
-<script>
-    $('#summernote').summernote({
-        placeholder: 'Hi Sandeep, Write something today',
-
-        tabsize: 2,
-        codemirror: { // codemirror options
-            theme: 'monokai'
-        },
-        height: 620,
-
-
-        disableResizeEditor: true
-    });
-    var save = function() {
-        var markup = $('#summernote').summernote('code');
-        console.log(markup);
-        $('#summernote').summernote('insertText', 'hello world');
-    };</script>
 </body>
 <footer th:replace="fragments/footerFragment :: footerFragment"></footer>
+
 
 
 </html>

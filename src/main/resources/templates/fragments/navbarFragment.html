@@ -16,9 +16,9 @@
 
     <div class="navbar-menu nav-color" id="navMenu">
         <div class="navbar-end">
-            <div class="navbar-item has-dropdown is-hoverable">
+            <div class="navbar-item has-dropdown is-hoverable aria-haspopup=true">
                 <a class="navbar-link">
-                    Menu
+                    <span sec:authentication="name">Bob</span>
                 </a>
 
                 <div class="navbar-dropdown ">
@@ -35,6 +35,10 @@
                     </a>
                     </div>
                     <span sec:authorize="isAuthenticated()">
+                        <a class="navbar-item" href="/admin">
+                            <span><i class="fas fa-unlock-alt"></i></span>&nbsp;
+                            <span>Admin</span>
+                    </a>
                     <a  class="navbar-item" href="/logout">
                         <span><i class="fas fa-archive"></i></span>&nbsp;&nbsp;
                         <span>Logout</span>

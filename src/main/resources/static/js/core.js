@@ -23,3 +23,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 });
+
+
+$('#burger-menu').on('click', function (e) {
+
+    console.log('Launching the modal');
+        var modalid = document.getElementById('navMenu');
+        console.log(modalid);
+    modalid.classList.add('is-active');
+});
+

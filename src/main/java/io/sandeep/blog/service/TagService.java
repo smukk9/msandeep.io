@@ -12,5 +12,5 @@ public interface TagService {
     boolean deleteTagById(int id);
     Tag save(Tag tag);
     boolean saveJsonTag(JsonNode actualObj);
-    boolean isTagnameExists(String tagName);
+    public boolean createTag(String tag);
 }

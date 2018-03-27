@@ -46,7 +46,7 @@ public class TagResources  {
 
         ObjectMapper mapper = new ObjectMapper();
         JsonNode actualObj = mapper.readTree(tag);
-
+        logger.info("****Tag receved from ajax****: {}", tag);
         boolean savedTag = tagService.saveJsonTag(actualObj);
 
         return ResponseEntity.ok().body(savedTag);

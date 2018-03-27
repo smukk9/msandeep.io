@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="has-navbar-fixed-top" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/headerFragment ::headerFragment"></head>
-
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <body>
 
 <nav th:replace="fragments/navbarFragment :: navbarFragment"/>
@@ -10,26 +10,31 @@
 
 
 <div class="container">
-    <div class="columns is-mobile is-centered">
+    <div class="columns is-mobile is-desktop is-centered">
         <h1 class="title is-2">Admin Page</h1>
     </div>
-    <div class="columns is-mobile is-centered">
-
+    <div class="columns is-mobile is-flex-mobile is-desktop is-centered">
         <div class="column">
-
             <nav class="panel">
                 <p class="panel-heading">
                     Admin Functions
                 </p>
-                <a class="panel-block is-active">
-    <span class="panel-icon">
-      <i class="fas fa-book"></i>
-    </span>
+                <a class="panel-block">
+                    <span class="panel-icon">
+                        <i class="fas fa-book"></i>
+                        </span>
                     Create New Article
+                </a>
+                <a class="panel-block button modal-button" id="create-tag" data-target="modal-tag-create" >
+                    <span class="panel-icon">
+                      <i class="fas fa-tag" />
+                    </span>
+                    Create New Tag
                 </a>
 
             </nav>
         </div>
+
 
         <div class="column is-narrow is-offset-1">
 
@@ -124,7 +129,39 @@
 </div>
 <br/>
 
+<div id="modal-tag-create" class="modal is-mobile ">
 
+    <div class="modal-background close-modal"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title is-centered">Create a Tag</p>
+            <button class="delete close-modal" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <div class="field">
+                <label class="label">Enter a tag name</label>
+                <div class="control">
+                    <input class="input" type="text" placeholder="TagName" />
+                </div>
+            </div>
+            <div class="field">
+                <label class="label tag ">Adding Tag:</label>
+                <label class="label tag is-info tag-name">Sandeep</label>
+                <label class="label tag is-info tag-name">beans</label>
+                <label class="label tag is-info tag-name">clsdd</label>
+                <label class="label tag is-info tag-name">Sddsp</label>
+
+            </div>
+
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button is-success save-tag">Save Tag</button>
+            <button class="button close-modal">Cancel</button>
+        </footer>
+    </div>
+</div>
+<script th:src="@{/js/admin.js}"></script>
+<script th:src="@{/webjars/jquery/3.3.1-1/jquery.js}"></script>
 </body>
 <footer th:replace="fragments/footerFragment :: footerFragment"></footer>
 

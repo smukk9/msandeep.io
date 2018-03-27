@@ -17,6 +17,7 @@
     <div class="space">
         <div class="field">
             <div class="control">
+                <a class="title is-success action"> Create a Article</a>
                 <input class="input is-primary" id="article-title" type="text" placeholder="Article Title" />
             </div>
         </div>
@@ -32,42 +33,42 @@
     <div class="field is-grouped is-grouped-multiline" id="addtag">
         <div class="control">
             <div class="tags has-addons">
-                <a class="tag is-link">Technology</a>
+                <a class="tag is-link tag-name">Technology</a>
                 <a class="tag is-delete"></a>
             </div>
         </div>
 
         <div class="control">
             <div class="tags has-addons">
-                <a class="tag is-link">CSS</a>
+                <a class="tag tag-name is-link">CSS</a>
                 <a class="tag is-delete"></a>
             </div>
         </div>
 
         <div class="control">
             <div class="tags has-addons">
-                <a class="tag is-link">Flexbox</a>
+                <a class="tag tag-name is-link">Flexbox</a>
                 <a class="tag is-delete" onclick="removeTag()"></a>
             </div>
         </div>
 
         <div class="control">
             <div class="tags has-addons">
-                <a class="tag is-link">Web Design</a>
+                <a class="tag tag-name is-link">Web Design</a>
                 <a class="tag is-delete"></a>
             </div>
         </div>
 
         <div class="control">
             <div class="tags has-addons">
-                <a class="tag is-link">Open Source</a>
+                <a class="tag tag-name is-link">Open Source</a>
                 <a class="tag is-delete"></a>
             </div>
         </div>
 
         <div class="control">
             <div class="tags has-addons">
-                <a class="tag is-link">Community</a>
+                <a class="tag tag-name is-link">Community</a>
                 <a class="tag is-delete"></a>
             </div>
         </div>
@@ -133,6 +134,7 @@
 <br/>
 
 <script th:src="@{/js/editor.js}"></script>
+
 
 </body>
 <footer th:replace="fragments/footerFragment :: footerFragment"></footer>

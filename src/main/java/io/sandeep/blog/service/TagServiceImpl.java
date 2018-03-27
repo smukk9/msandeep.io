@@ -63,29 +63,46 @@ public class TagServiceImpl implements TagService {
     public boolean saveJsonTag(JsonNode actualObj) {
 
         JsonNode tagName = actualObj.get(JsonKeys.TAGNAME.getValue());
-        logger.info("Json Tag name from Enum: {}", JsonKeys.TAGNAME.getValue());
+
         logger.info("JsonNode from the request: {}", tagName);
+        logger.info("checking if is array: {}", tagName.isArray() );
+
+
+
 
         if(tagName.isArray()){
             for (final  JsonNode objNode: tagName){
-                Tag saveTag = Tag.builder().tagName(objNode.get("name").textValue()).build();
-                Tag tag = tagRepository.save(saveTag);
-                logger.info("Saving Tag from request: {}", tag.toString());
+
+                //Replace "" first and last on the tag
+                String tag= objNode.get("name").toString().replace("\"","");
+
+                //Check if tag exists
+                boolean check= tagRepository.existsByTagName(tag);
+                logger.info("Does tag exists ? : {}", check);
+
+                /*
+                check if True -> skip creation
+                         False -> Create tag
+                 */
+                if(!check){
+                    logger.info(" saving tag, creating tag: {}"  , tag );
+                    createTag(tag);
+                }else {
+                    logger.info("Not saving tag, exists skipping: {}"  , tag );
+                }
+
             }
-            return true;
-        }else{
-                Tag saveTag = Tag.builder().tagName(tagName.asText()).build();
-                Tag tag = tagRepository.save(saveTag);
-             logger.info("Saving Tag from request: {}", tag.toString());
-            return true;
-            }
+        }
+        return  true;
     }
 
-    @Override
-  public  boolean isTagnameExists(String tagName){
 
-        return tagRepository.existsByTagName(tagName);
+@Override
+public boolean createTag(String tag){
 
-
-}
+    Tag saveTag = Tag.builder().tagName(tag).build();
+    Tag newTag = tagRepository.save(saveTag);
+    logger.info("Saving Tag from request: {}", newTag);
+    return true;
+    }
 }

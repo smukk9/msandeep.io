@@ -17,8 +17,9 @@ var tags ={
     tagnames:[]
 };
 
-function createTag() {
 
+//TO-DO remove the old tag value before saving the new one .
+function createTag() {
 
     $( ".tag-name" ).each(function( index ) {
         console.log( index + ": " + $( this ).text() );
@@ -39,7 +40,9 @@ createTag();
 
 
 $(".save-tag").on('click', function (e) {
-    console.log("saving the tag");
+    console.log("saving the following tag");
+    createTag();
+    console.log(tags);
     $.ajax({
         type: "POST",
         contentType: "application/json",
@@ -52,6 +55,10 @@ $(".save-tag").on('click', function (e) {
 
             console.log("SUCCESS : ", data);
 
+            $(".confirm-notify").text("Tags Saved");;
+            $(".confirm-notify").fadeOut(3000);
+           $("#addtag").empty();
+
         },
         error: function (e) {
 
@@ -60,4 +67,43 @@ $(".save-tag").on('click', function (e) {
         }
     });
 
+
+
 });
+
+//Add new tag to the tag display panel
+$('#tagline').on('click', function (e) {
+    var tag = document.getElementById("tagName").value;
+    var div = document.createElement('div');
+    div.setAttribute('class','control');
+    div.setAttribute('class',tag);
+    div.setAttribute('id',tag);
+    div.setAttribute('onclick','removeTag(this.id)');
+    div.innerHTML=`
+        <div class="tags has-addons">
+                <a class="tag is-link tag-value tag-name">${tag}</a>
+                <a class="tag is-delete"></a>
+            </div>
+            `;
+
+            console.log(div);
+            document.getElementById('addtag').appendChild(div);
+
+            //set the value of tagName input to empty
+            $('#tagName').val("");
+
+
+});
+
+//remove the tag from the tag display panel
+function removeTag(e) {
+
+    console.log("Remove tag initated")
+    console.log(e);
+    //get the id of the clicked evernt
+   // var clickedElement = e.target.id;
+    console.log("clicked Element"+ e)
+    var elem = document.getElementById(e);
+    console.log(elem);
+    elem.parentNode.removeChild(elem);
+}

@@ -19,7 +19,7 @@
                 <p class="panel-heading">
                     Admin Functions
                 </p>
-                <a class="panel-block">
+                <a class="panel-block" href="/create/article">
                     <span class="panel-icon">
                         <i class="fas fa-book"></i>
                         </span>
@@ -135,24 +135,21 @@
     <div class="modal-card">
         <header class="modal-card-head">
             <p class="modal-card-title is-centered">Create a Tag</p>
+            <p class="modal-card-title is-info confirm-notify is-centered"></p>
             <button class="delete close-modal" aria-label="close"></button>
         </header>
         <section class="modal-card-body">
             <div class="field">
                 <label class="label">Enter a tag name</label>
-                <div class="control">
-                    <input class="input" type="text" placeholder="TagName" />
+                <div class="control field has-addons">
+                        <input class="input tagName" id="tagName" type="text" placeholder="TagName" />
+                        <button class="button is-success" id="tagline" >
+                            Add Tag
+                       </button>
                 </div>
             </div>
-            <div class="field">
-                <label class="label tag ">Adding Tag:</label>
-                <label class="label tag is-info tag-name">Sandeep</label>
-                <label class="label tag is-info tag-name">beans</label>
-                <label class="label tag is-info tag-name">clsdd</label>
-                <label class="label tag is-info tag-name">Sddsp</label>
-
-            </div>
-
+                <div class="field is-grouped is-grouped-multiline" id="addtag">
+                </div>
         </section>
         <footer class="modal-card-foot">
             <button class="button is-success save-tag">Save Tag</button>

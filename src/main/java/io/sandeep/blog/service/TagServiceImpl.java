@@ -72,12 +72,11 @@ public class TagServiceImpl implements TagService {
 
         if(tagName.isArray()){
             for (final  JsonNode objNode: tagName){
-
                 //Replace "" first and last on the tag
                 String tag= objNode.get("name").toString().replace("\"","");
 
                 //Check if tag exists
-                boolean check= tagRepository.existsByTagName(tag);
+                boolean check= tagRepository.existsByTagNameIgnoreCase(tag);
                 logger.info("Does tag exists ? : {}", check);
 
                 /*
@@ -90,19 +89,28 @@ public class TagServiceImpl implements TagService {
                 }else {
                     logger.info("Not saving tag, exists skipping: {}"  , tag );
                 }
-
             }
         }
         return  true;
     }
 
 
-@Override
-public boolean createTag(String tag){
+    @Override
+    public boolean createTag(String tag){
 
     Tag saveTag = Tag.builder().tagName(tag).build();
     Tag newTag = tagRepository.save(saveTag);
     logger.info("Saving Tag from request: {}", newTag);
     return true;
     }
+
+    public Optional<List<Tag>> searchTagsByName(String tagName){
+
+        //find all the tagName that matach the string
+
+        String upperTag = tagName.toUpperCase();
+       Optional<List<Tag>> tagList = tagRepository.searchWithNativeQuery(upperTag);
+        return  tagList;
+    }
+
 }

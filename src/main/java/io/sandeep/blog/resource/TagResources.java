@@ -13,7 +13,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api/v1/tag")
@@ -46,12 +49,34 @@ public class TagResources  {
 
         ObjectMapper mapper = new ObjectMapper();
         JsonNode actualObj = mapper.readTree(tag);
-
+        logger.info("****Tag receved from ajax****: {}", tag);
         boolean savedTag = tagService.saveJsonTag(actualObj);
 
         return ResponseEntity.ok().body(savedTag);
+    }
+
+    //tag?tagName="sandee"
+    @GetMapping("/search")
+    public ResponseEntity<?> searchApi(@RequestParam String tagName){
+
+        logger.info("log the value from the ?: {}", tagName);
+        //call the searchTag in tagimpl class
+       Optional<List<Tag>> tagList = tagService.searchTagsByName(tagName);
+        List<String> stringName = new ArrayList<>();
+
+        if(tagList.isPresent()){
+
+            logger.info("is from the inside if: {}", tagList );
+
+            return ResponseEntity.ok().body(tagList.get());
+        }else
+        {
+            logger.info("No value found for the reqeust" );
+            return ResponseEntity.notFound().build();
+        }
 
 
     }
+
 
 }

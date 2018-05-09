@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html class="has-navbar-fixed-top" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/headerFragment ::headerFragment"></head>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script
+        src="http://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.js"></script>
 
@@ -14,9 +17,10 @@
     <div class="columns is-mobile is-centered">
         <h1 class="title is-2">Editor</h1>
     </div>
-    <div class="space">
+    <div class="space" th:if="${isArticleTrigger}">
         <div class="field">
             <div class="control">
+                <a class="title is-success action"> Create a Article</a>
                 <input class="input is-primary" id="article-title" type="text" placeholder="Article Title" />
             </div>
         </div>
@@ -27,59 +31,28 @@
     <div class="control">
         <input class="input is-primary" id="tagline" type="text" placeholder="Add tags" />
     </div>
+
+    <nav class="panel" id="searchVal">
+
+
+    </nav>
+    <div class="notification is-danger">
+        <button class="delete"></button>
+       Sorry, no tag found Sandeep
+    </div>
     <br/>
-    <div class="tag">
+
     <div class="field is-grouped is-grouped-multiline" id="addtag">
-        <div class="control">
-            <div class="tags has-addons">
-                <a class="tag is-link">Technology</a>
-                <a class="tag is-delete"></a>
-            </div>
-        </div>
 
-        <div class="control">
-            <div class="tags has-addons">
-                <a class="tag is-link">CSS</a>
-                <a class="tag is-delete"></a>
-            </div>
-        </div>
-
-        <div class="control">
-            <div class="tags has-addons">
-                <a class="tag is-link">Flexbox</a>
-                <a class="tag is-delete" onclick="removeTag()"></a>
-            </div>
-        </div>
-
-        <div class="control">
-            <div class="tags has-addons">
-                <a class="tag is-link">Web Design</a>
-                <a class="tag is-delete"></a>
-            </div>
-        </div>
-
-        <div class="control">
-            <div class="tags has-addons">
-                <a class="tag is-link">Open Source</a>
-                <a class="tag is-delete"></a>
-            </div>
-        </div>
-
-        <div class="control">
-            <div class="tags has-addons">
-                <a class="tag is-link">Community</a>
-                <a class="tag is-delete"></a>
-            </div>
-        </div>
-
-        <div class="control">
-            <div class="tags has-addons">
-                <a class="tag is-link">Documentation</a>
-                <a class="tag is-delete"></a>
-            </div>
-        </div>
     </div>
-    </div>
+
+
+
+
+
+
+
+
 
     <br/>
     <br/>
@@ -113,11 +86,10 @@
                         <span class="icon is-small"><i class="fas fa-times"></i></span>
                     </a>
                     <a class="button is-link" id="submit">
-                        <span>Save Changes</span>
+                        <span onclick="saveArticle()">Save Changes</span>
                         <span class="icon is-small">
                                 <i class="fas fa-check"></i>
                                 </span>
-
                     </a>
 
                 </p>
@@ -133,6 +105,8 @@
 <br/>
 
 <script th:src="@{/js/editor.js}"></script>
+
+
 
 </body>
 <footer th:replace="fragments/footerFragment :: footerFragment"></footer>

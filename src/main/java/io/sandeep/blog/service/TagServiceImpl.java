@@ -63,29 +63,54 @@ public class TagServiceImpl implements TagService {
     public boolean saveJsonTag(JsonNode actualObj) {
 
         JsonNode tagName = actualObj.get(JsonKeys.TAGNAME.getValue());
-        logger.info("Json Tag name from Enum: {}", JsonKeys.TAGNAME.getValue());
+
         logger.info("JsonNode from the request: {}", tagName);
+        logger.info("checking if is array: {}", tagName.isArray() );
+
+
+
 
         if(tagName.isArray()){
             for (final  JsonNode objNode: tagName){
-                Tag saveTag = Tag.builder().tagName(objNode.get("name").textValue()).build();
-                Tag tag = tagRepository.save(saveTag);
-                logger.info("Saving Tag from request: {}", tag.toString());
+                //Replace "" first and last on the tag
+                String tag= objNode.get("name").toString().replace("\"","");
+
+                //Check if tag exists
+                boolean check= tagRepository.existsByTagNameIgnoreCase(tag);
+                logger.info("Does tag exists ? : {}", check);
+
+                /*
+                check if True -> skip creation
+                         False -> Create tag
+                 */
+                if(!check){
+                    logger.info(" saving tag, creating tag: {}"  , tag );
+                    createTag(tag);
+                }else {
+                    logger.info("Not saving tag, exists skipping: {}"  , tag );
+                }
             }
-            return true;
-        }else{
-                Tag saveTag = Tag.builder().tagName(tagName.asText()).build();
-                Tag tag = tagRepository.save(saveTag);
-             logger.info("Saving Tag from request: {}", tag.toString());
-            return true;
-            }
+        }
+        return  true;
     }
 
+
     @Override
-  public  boolean isTagnameExists(String tagName){
+    public boolean createTag(String tag){
 
-        return tagRepository.existsByTagName(tagName);
+    Tag saveTag = Tag.builder().tagName(tag).build();
+    Tag newTag = tagRepository.save(saveTag);
+    logger.info("Saving Tag from request: {}", newTag);
+    return true;
+    }
 
+    public Optional<List<Tag>> searchTagsByName(String tagName){
 
-}
+        //find all the tagName that matach the string
+
+        String upperTag = tagName.toUpperCase();
+       Optional<List<Tag>> tagList = tagRepository.searchWithNativeQuery(upperTag);
+        return  tagList;
+    }
+
 }

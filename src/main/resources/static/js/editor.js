@@ -1,8 +1,7 @@
 $( document ).ready(function() {
 
     console.log("Loading summernot");
-   var notif= document.getElementsByClassName("notification");
-    $(notif).hide();
+
     $('#summernote').summernote({
         placeholder: 'Hi Sandeep, Write something today',
 
@@ -90,7 +89,7 @@ $("#tagline").on('keyup', function (e) {
         cleanSearch();
 
         var notif= document.getElementsByClassName("notification");
-        $(notif).hide();
+        $(notif).addClass("is-hidden");
 
     }
     if(beforeVal && beforeVal.length >1){
@@ -105,20 +104,37 @@ $("#tagline").on('keyup', function (e) {
             success: function (data) {
 
                 for (var i in data){
+
+                    //Get the Id of the tags
+                    var tagIds = $.map($(".saveTag"), function(n, i){
+                        return n.id;
+                    });
+
+
+                    if($.inArray(data[i].id.toString(),tagIds) < 0){
+
                         var anchor = document.createElement("a");
                         anchor.setAttribute('class', 'panel-block');
                         anchor.setAttribute('id', data[i].tagName);
                         anchor.setAttribute('onclick','addToInputLine(this.id)');
                         anchor.setAttribute('value',data[i].id);
-                       $(anchor).text(data[i].tagName);
-                   document.getElementById('searchVal').appendChild(anchor);
+                        $(anchor).text(data[i].tagName);
+                        document.getElementById('searchVal').appendChild(anchor);
+                    }else{
+
+
+                    }
+
+
                 }
+
 
             },
             error: function (e) {
 
-                var notif = document.getElementsByClassName("notification");
-                $(notif).show();
+
+                var notif= document.getElementsByClassName("notification");
+                $(notif).removeClass("is-hidden");
 
             }
         });
@@ -210,16 +226,32 @@ function saveArticle() {
 
 
         // article object
-        var article = {
+        var article =[];
+      //  var tagsList=[];
+
+        article.push({
             "title": title,
-            "article": content,
-            "tagId":tagIds
+            "content":content
+           // "tags": tagIds
+
+        });
+
+    console.log(article);
+
+    // tagIds.forEach(function(element) {
+    //     article.tags.id=element;
+    // });
+    $.ajax({
+        url: "/api/v1/article",
+        type: "post",
+        data: JSON.stringify(article),
+        datatype:"json",
+        contentType: "application/json; charset=utf-8",
+        success: function(d) {
+            console.log(d);
         }
+    });
 
-        console.log(article);
-
-
-
-    
+   // console.log(article);
 }
 

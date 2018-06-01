@@ -107,7 +107,6 @@ public class ArticleServiceImpl implements ArticleService {
         logger.info("Saved Article is: {}", newArticle);
         return  articleRepository.save(newArticle);
 
-
     }
 
     @Override

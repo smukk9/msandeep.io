@@ -1,11 +1,12 @@
 package io.sandeep.blog.resource;
 
-import com.fasterxml.jackson.core.JsonParseException;
+
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import io.sandeep.blog.BlogException.BlogGenericError;
 import io.sandeep.blog.entity.Article;
+import io.sandeep.blog.enums.JsonKeys;
 import io.sandeep.blog.service.ArticleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.List;
 
 @RestController
@@ -55,12 +57,19 @@ public class ArticleResources {
     @PostMapping
     public  ResponseEntity<?> saveArticle(@RequestBody String article )throws IOException {
 
+
+        logger.info("Request posted from editor page: {}", article);
         ObjectMapper mapper = new ObjectMapper();
+
+
         JsonNode actualObj = mapper.readTree(article);
+        JsonNode firstNode = actualObj.get(0);
+        logger.info("======================================================");
+        logger.info("Request posted from editor page: {}",firstNode.get("content"));
+        logger.info("======================================================");
+       //Article saveArticle = articleService.saveJsonArticle(actualObj);
 
-        Article saveArticle = articleService.saveJsonArticle(actualObj);
-
-        return ResponseEntity.ok().body(actualObj.get("title"));
+        return ResponseEntity.ok().body("test");
     }
 
 

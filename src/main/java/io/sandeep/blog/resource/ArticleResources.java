@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.sandeep.blog.BlogException.BlogGenericError;
 import io.sandeep.blog.entity.Article;
+import io.sandeep.blog.entity.Tag;
 import io.sandeep.blog.enums.JsonKeys;
 import io.sandeep.blog.service.ArticleService;
 import org.slf4j.Logger;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/article")
@@ -29,33 +31,32 @@ public class ArticleResources {
     private ArticleService articleService;
 
     @GetMapping
-    public List<Article> listAllArticle(){
+    public List<Article> listAllArticle() {
 
         return articleService.getAllArticles();
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<?> getArticleById(@PathVariable int id){
+    public ResponseEntity<?> getArticleById(@PathVariable int id) {
 
         logger.info(" Request article Id: {}", id);
-        return articleService.getArticleById(id).<ResponseEntity<?>> map(ResponseEntity::ok)
+        return articleService.getArticleById(id).<ResponseEntity<?>>map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(new BlogGenericError("Article not found with id :"+id)));
-
+                        .body(new BlogGenericError("Article not found with id :" + id)));
 
 
     }
 
     @DeleteMapping("{id}")
-    public String deleteById(@PathVariable int id){
+    public String deleteById(@PathVariable int id) {
 
         boolean test = articleService.deleteArticleById(id);
 
-        return  "Deleted";
+        return "Deleted";
     }
 
     @PostMapping
-    public  ResponseEntity<?> saveArticle(@RequestBody String article )throws IOException {
+    public ResponseEntity<?> saveArticle(@RequestBody String article) throws IOException {
 
 
         logger.info("Request posted from editor page: {}", article);
@@ -64,15 +65,14 @@ public class ArticleResources {
 
         JsonNode actualObj = mapper.readTree(article);
         JsonNode firstNode = actualObj.get(0);
-        logger.info("======================================================");
-        logger.info("Request posted from editor page: {}",firstNode.get("content"));
-        logger.info("======================================================");
-       //Article saveArticle = articleService.saveJsonArticle(actualObj);
+        JsonNode tagCount = firstNode.get(JsonKeys.TAGS.getValue());
+        Article saveArticle = articleService.saveJsonArticle(firstNode);
 
-        return ResponseEntity.ok().body("test");
+        return ResponseEntity.ok().body(saveArticle);
+
+
     }
-
-
-
-
 }
+
+
+

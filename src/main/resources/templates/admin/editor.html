@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html class="has-navbar-fixed-top" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/headerFragment ::headerFragment"></head>
+<head th:replace="fragments/headerFragment ::headerFragment">
+
 <script
         src="http://code.jquery.com/jquery-3.3.1.js"
         integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
         crossorigin="anonymous"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.js"></script>
-
-
+</head>
 <body>
 
 <nav th:replace="fragments/navbarFragment :: navbarFragment" />
@@ -26,7 +24,7 @@
         </div>
     </div>
 
-    <div id="summernote"></div>
+    <textarea class="textarea is-info" id="mytextarea" type="text" rows="26" placeholder="Info textarea"></textarea>
     <br/>
     <div class="control">
         <input class="input is-primary" id="tagline" type="text" placeholder="Add tags" />
@@ -103,9 +101,8 @@
 
 </section>
 <br/>
-
+<div th:replace="fragments/headerFragment ::before-body-scripts"></div>
 <script th:src="@{/js/editor.js}"></script>
-
 
 
 </body>

@@ -84,7 +84,7 @@ public class ArticleServiceImpl implements ArticleService {
         if (tagCount.isArray()) {
             for (final JsonNode objNode : tagCount) {
 
-                Optional<Tag> tag = tagRepository.findById(objNode.get("id").asInt());
+                Optional<Tag> tag = tagRepository.findById(objNode.asInt());
                 logger.info("Retrieved tag from DB: {}", tag);
                 tag.ifPresent(tagSet::add);
             }

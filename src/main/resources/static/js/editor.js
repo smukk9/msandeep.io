@@ -1,21 +1,3 @@
-$( document ).ready(function() {
-
-    console.log("Loading summernot");
-
-    $('#summernote').summernote({
-        placeholder: 'Hi Sandeep, Write something today',
-
-        tabsize: 2,
-        codemirror: { // codemirror options
-            theme: 'monokai'
-        },
-        height: 650,
-
-
-        disableResizeEditor: true
-    });
-});
-
 
 // var save = function() {
 //     var markup = $('#summernote').summernote('code');
@@ -214,6 +196,10 @@ From here all the function and code is related to following functionality
 
  */
 
+
+$('#mytextarea').keyup( function() {
+    $(this).val( $(this).val().replace( /\r?\n/gi, '' ) );
+});
 function saveArticle() {
 
     //Get the Id of the tags
@@ -222,7 +208,7 @@ function saveArticle() {
     });
 
     var title = document.getElementById('article-title').value;
-    var content = $('#summernote').summernote('code');
+   var content = $("#mytextarea").val();
 
 
         // article object
@@ -231,27 +217,24 @@ function saveArticle() {
 
         article.push({
             "title": title,
-            "content":content
-           // "tags": tagIds
+            "content":content,
+           "tags": tagIds
 
         });
 
-    console.log(article);
 
-    // tagIds.forEach(function(element) {
-    //     article.tags.id=element;
-    // });
-    $.ajax({
-        url: "/api/v1/article",
-        type: "post",
-        data: JSON.stringify(article),
-        datatype:"json",
-        contentType: "application/json; charset=utf-8",
-        success: function(d) {
-            console.log(d);
-        }
-    });
 
-   // console.log(article);
+        $.ajax({
+            url: "/api/v1/article",
+            type: "post",
+            data: JSON.stringify(article),
+            datatype:"json",
+            contentType: "application/json; charset=utf-8",
+            success: function(d) {
+                console.log(d);
+            }
+        });
+
+       console.log(article);
 }
 

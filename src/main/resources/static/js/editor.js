@@ -134,7 +134,7 @@ function addToInputLine(event) {
 
 
     cleanSearch();
-    console.log("checking the event "+ event);
+
     var tagValue = event;
     //set the tagvalue to the inputLine
     var inputDom = document.getElementById("tagline");
@@ -156,7 +156,7 @@ function addTagGroup(tagValue) {
         timeout: 100000,
         success: function (data) {
 
-            console.log(data[0].tagName );
+
             var div = document.createElement('div');
             div.setAttribute('class','control');
             $(div).addClass(data[0].tagName );
@@ -196,10 +196,14 @@ From here all the function and code is related to following functionality
 
  */
 
+$('.close-modal').on('click', function (e) {
 
-$('#mytextarea').keyup( function() {
-    $(this).val( $(this).val().replace( /\r?\n/gi, '' ) );
+
+    var modalid = document.getElementById('modal-tag-create');
+    modalid.classList.remove('is-active');
 });
+
+
 function saveArticle() {
 
     //Get the Id of the tags
@@ -208,8 +212,7 @@ function saveArticle() {
     });
 
     var title = document.getElementById('article-title').value;
-   var content = $("#mytextarea").val();
-
+    var content =  tinyMCE.activeEditor.getContent();
 
         // article object
         var article =[];
@@ -217,12 +220,10 @@ function saveArticle() {
 
         article.push({
             "title": title,
-            "content":content,
+            "content":encodeURIComponent(content),
            "tags": tagIds
 
         });
-
-
 
         $.ajax({
             url: "/api/v1/article",
@@ -231,10 +232,22 @@ function saveArticle() {
             datatype:"json",
             contentType: "application/json; charset=utf-8",
             success: function(d) {
-                console.log(d);
+
+
+                var modalid = document.getElementById("modal-tag-create");
+                modalid.classList.add('is-active');
+                tinyMCE.get('myTextarea').setContent('');
+                $('#article-title').val("");
+                $("#addtag").empty();
+
+            },error: function (e) {
+
+                var notif = document.getElementsByClassName("notification");
+                $(notif).show();
+
             }
         });
 
-       console.log(article);
+
 }
 

@@ -1,17 +1,22 @@
 package io.sandeep.blog.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import io.sandeep.blog.entity.Article;
 import io.sandeep.blog.entity.Tag;
 import io.sandeep.blog.enums.JsonKeys;
+import io.sandeep.blog.repository.ArticleRepository;
 import io.sandeep.blog.repository.TagRepository;
+import io.swagger.models.auth.In;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
@@ -22,6 +27,8 @@ public class TagServiceImpl implements TagService {
     @Autowired
     private TagRepository tagRepository;
 
+    @Autowired
+    private ArticleRepository articleRepository;
 
 
 
@@ -112,5 +119,69 @@ public class TagServiceImpl implements TagService {
        Optional<List<Tag>> tagList = tagRepository.searchWithNativeQuery(upperTag);
         return  tagList;
     }
+
+
+    //find all article and loop through each one of them
+    //count the tag and
+        //insert if not exisits else increse
+    @Override
+    public ArrayNode tagCount(){
+
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayNode arrayNode = mapper.createArrayNode();
+
+       // ObjectNode objectNode = mapper.createObjectNode();
+
+
+        //Return a hasmap
+        HashMap<Tag, Integer> tagCountMap = new HashMap<>();
+
+        //get all article
+        List<Article> allArts = articleRepository.findAll();
+
+        int initcount=1;
+        int incrementCount=0;
+        for(Article article : allArts){
+
+            List<Tag> tagsList = article.getTags();
+            for (Tag tag : tagsList) {
+
+                if(!tagCountMap.containsKey(tag)){
+                    //add value
+                    tagCountMap.put(tag,initcount);
+
+                }else{
+
+                    int tagValue = tagCountMap.get(tag);
+                    //increment the count
+                    tagValue++;
+                    //put the value back.
+                    tagCountMap.put(tag, tagValue);
+                }
+            }
+        }
+
+        Iterator it = tagCountMap.entrySet().iterator();
+        while (it.hasNext()){
+            ObjectNode tagCountNode = mapper.createObjectNode();
+            Map.Entry pair = (Map.Entry)it.next();
+            Tag tag = (Tag)pair.getKey();
+            logger.info("Extract of tagCountMap: {}",tag );
+
+            tagCountNode.put("tagName", tag.getTagName());
+            tagCountNode.put("tagId", tag.getId());
+            tagCountNode.put("tagCount", (Integer) pair.getValue());
+            arrayNode.add(tagCountNode);
+
+        }
+
+        return arrayNode;
+
+    }
+
+
+
+
+
 
 }

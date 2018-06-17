@@ -1,6 +1,10 @@
 package io.sandeep.blog.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.sandeep.blog.configuration.AuthenticationFacade;
 import io.sandeep.blog.entity.Article;
 import io.sandeep.blog.entity.Tag;
@@ -12,10 +16,16 @@ import io.sandeep.blog.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 
 @Service
@@ -35,6 +45,8 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
     private TagRepository tagRepository;
+
+    ObjectMapper mapper = new ObjectMapper();
 
     @Override
     public List<Article> getAllArticles() {
@@ -113,5 +125,73 @@ public class ArticleServiceImpl implements ArticleService {
     public Article save(Article article){
         return  articleRepository.save(article);
     }
+
+    @Override
+    public ArrayNode  getarchives() throws JsonProcessingException {
+
+        //get all articles
+        List<Article> allArts = articleRepository.findAll();
+        logger.info("all articles for archives: {}",allArts );
+
+        ArrayNode arrayNode = mapper.createArrayNode();
+        HashMap<Integer, List<Article>> archives = new HashMap<>();
+
+        for (Article article : allArts) {
+
+            //get Year of the article
+            Date fullDate=article.getCreateDate();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(fullDate);
+            int year = calendar.get(Calendar.YEAR);
+
+            if(archives.containsKey(year)){
+
+                //get the list
+                List<Article> key_value = archives.get(year);
+                key_value.add(article);
+            }else{
+                List<Article> article_value = new LinkedList<>();
+                boolean check =    article_value.add(article);
+                if (check) {
+                    archives.put(year, article_value);
+                }else {
+                    logger.error("failed to add article: {}",article.getId() );
+                }
+            }
+
+        }
+
+        //i dont like this, but for now lets get with it. will find a better way to get it.
+
+            //get string json
+    //    String JsonResponse = mapper.writeValueAsString(archives);
+
+
+        Iterator it = archives.entrySet().iterator();
+        while (it.hasNext()){
+
+            ObjectNode archiveNode = mapper.createObjectNode();
+            Map.Entry pair = (Map.Entry)it.next();
+            int year_key = (Integer)(pair.getKey());
+            logger.info("Extract of the key from hasmap: {}",year_key );
+            String JsonResponse = mapper.writeValueAsString(pair.getValue());
+            archiveNode.put("year",year_key);
+            archiveNode.put("articleArray", JsonResponse);
+            arrayNode.add(archiveNode);
+        }
+
+        return arrayNode;
+
+    }
+
+    //get the lates article
+    @Override
+    public List<Article> getLastestPageable(){
+
+        Pageable pageable = new PageRequest(0,6, Sort.Direction.ASC,"createDate");
+        Page<Article> topArticle = articleRepository.findAll(pageable);
+        return  topArticle.getContent();
+    }
+
 
 }

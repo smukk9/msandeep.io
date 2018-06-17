@@ -55,10 +55,13 @@ public class BlogApplicationRunner implements ApplicationRunner  {
         List<Tag> tagList = new LinkedList<>();
         Tag spring = Tag.builder().tagName("Spring").build();
         Tag springboot = Tag.builder().tagName("SpringBoot").build();
-        tagRepository.save(spring);
-        tagRepository.save(springboot);
+
         tagList.add(spring);
         tagList.add(springboot);
+
+
+        tagRepository.save(spring);
+        tagRepository.save(springboot);
 
         Article article1 = Article.builder()
                 .author(user)
@@ -67,8 +70,10 @@ public class BlogApplicationRunner implements ApplicationRunner  {
                 .tags(tagList)
                 .build();
 
+
         logger.info("user with the error: {}",article1 );
         Article returnType= articleService.save(article1);
+
         logger.info("saved article : {}", article1);
        logger.info("Return type: {}", returnType);
         logger.info("*********End Runner***************" );

@@ -3,6 +3,7 @@ package io.sandeep.blog.repository;
 import io.sandeep.blog.entity.Tag;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +16,7 @@ public interface TagRepository extends JpaRepository<Tag, Integer> {
      List<Tag> findAll();
      Tag save(Tag tag);
      Optional<Tag> findById(int id);
-     List<Tag> findByTagName(String tagName);
+     Tag findByTagName(String tagName);
      boolean existsByTagNameIgnoreCase(String tagName);
 
     @Query(
@@ -25,4 +26,9 @@ public interface TagRepository extends JpaRepository<Tag, Integer> {
     Optional<List<Tag>> searchWithNativeQuery(@Param("searchTerm") String searchTerm);
 
 
+//    @Query{
+//
+//        valu="SELECT * FROM Article"
+//    }
+//    List findyArticleByTag();
 }

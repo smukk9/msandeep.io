@@ -6,7 +6,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.util.*;
 
 @Data
 @NoArgsConstructor
@@ -26,6 +26,9 @@ public class Tag {
     @Column(name = "tagname")
     @NotNull
     private String tagName;
+//
+//    @ManyToMany(mappedBy = "tags")
+//    private List<Article> articles;
 
     @CreationTimestamp
     @Temporal(TemporalType.DATE)

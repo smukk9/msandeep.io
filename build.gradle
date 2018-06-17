@@ -19,8 +19,8 @@ apply plugin: 'application'
 
 group = 'io.sandeep'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility JavaVersion.VERSION_1_8
-targetCompatibility JavaVersion.VERSION_1_8
+//sourceCompatibility JavaVersion.VERSION_1_8
+//targetCompatibility JavaVersion.VERSION_1_8
 mainClassName = 'io.sandeep.blog.BlogApplication'
 
 repositories {
@@ -49,6 +49,8 @@ dependencies {
 	compile 'org.webjars:jquery:3.3.1-1'
 	compile 'org.webjars:bootstrap:4.0.0-2'
     compile 'org.webjars:font-awesome:5.0.6'
+	compile group: 'org.jsoup', name: 'jsoup', version: '1.8.3'
+
 }
 
 distDocker {

@@ -8,7 +8,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Optional;
 
 import static org.junit.Assert.*;
 
@@ -26,10 +25,12 @@ public class TagRepositoryTest {
     @Test
     public void existsByTagName() throws Exception {
 
-        testEntityManager.persist(Tag.builder().tagName("sandeep").build());
-        boolean check = tagRepository.existsByTagName("sandeep");
+        testEntityManager.persist(Tag.builder().tagName("springboot").build());
+        boolean check = tagRepository.existsByTagNameIgnoreCase("springboot");
         assertTrue(check);
 
     }
+
+
 
 }

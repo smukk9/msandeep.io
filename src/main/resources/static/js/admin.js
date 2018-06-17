@@ -107,3 +107,6 @@ function removeTag(e) {
     console.log(elem);
     elem.parentNode.removeChild(elem);
 }
+
+//Get all article for that year tag
+//  /article?getBy="year"

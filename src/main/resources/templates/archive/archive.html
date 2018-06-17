@@ -21,92 +21,8 @@
                 <thead>
 
                 </thead>
-                <tbody >
-                <tr>
-                    <td> <h1 class="title is-4 is-primary">2017</h1></td>
-                </tr>
-                <tr>
-                    <td> <a class="is-link">Jan 17</a></td>
-                    <td> <a class="is-link">  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque </a></td>
+                <tbody id="article-body">
 
-                </tr>
-                <tr>
-                    <td> <a class="is-link">Jan 17</a></td>
-                    <td> <a class="is-link">  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque </a></td>
-
-                </tr>
-                <tr>
-                    <td> <a class="is-link">Jan 17</a></td>
-                    <td> <a class="is-link">  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque </a></td>
-
-                </tr>
-                <tr>
-                    <td> <a class="is-link">Jan 17</a></td>
-                    <td> <a class="is-link">  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque </a></td>
-
-                </tr>
-                <tr>
-                    <td> <a class="is-link">Jan 17</a></td>
-                    <td> <a class="is-link">  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque </a></td>
-
-                </tr>
-                <tr>
-                    <td> <a class="is-link">Jan 17</a></td>
-                    <td> <a class="is-link">  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque </a></td>
-
-                </tr>
-                <tr>
-                    <td> <a class="is-link">Jan 17</a></td>
-                    <td> <a class="is-link">  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque </a></td>
-                </tr>
-                <tr>
-                    <td> <h1 class="title is-4 is-primary">2016</h1></td>
-                </tr>
-                <tr>
-                    <td> <a class="is-link">Jan 17</a></td>
-                    <td> <a class="is-link">  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque </a></td>
-
-                </tr>
-                <tr>
-                    <td> <a class="is-link">Jan 17</a></td>
-                    <td> <a class="is-link">  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque </a></td>
-
-                </tr>
-                <tr>
-                    <td> <a class="is-link">Jan 17</a></td>
-                    <td> <a class="is-link">  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque </a></td>
-
-                </tr>
-                <tr>
-                    <td> <a class="is-link">Jan 17</a></td>
-                    <td> <a class="is-link">  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque </a></td>
-
-                </tr>
-                <tr>
-                    <td> <a class="is-link">Jan 17</a></td>
-                    <td> <a class="is-link">  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque </a></td>
-
-                </tr>
-                <tr>
-                    <td> <a class="is-link">Jan 17</a></td>
-                    <td> <a class="is-link">  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque </a></td>
-
-                </tr>
-                <tr>
-                    <td> <a class="is-link">Jan 17</a></td>
-                    <td> <a class="is-link">  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque </a></td>
-
-                </tr>
-                <tr>
-                    <td> <a class="is-link">Jan 17</a></td>
-                    <td> <a class="is-link">  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque </a></td>
-
-                </tr>
-                <tr>
-                    <td> <a class="is-link">Jan 17</a></td>
-                    <td> <a class="is-link">  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque </a></td>
-
-                </tr>
                 </tbody>
             </table>
 
@@ -116,7 +32,8 @@
 </div>
 <br/>
 
-
+<div th:replace="fragments/headerFragment ::before-body-scripts"></div>
+<script th:src="@{/js/archive.js}"></script>
 </body>
 <footer th:replace="fragments/footerFragment :: footerFragment"></footer>
 

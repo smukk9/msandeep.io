@@ -1,22 +1,3 @@
-$( document ).ready(function() {
-
-    console.log("Loading summernot");
-   var notif= document.getElementsByClassName("notification");
-    $(notif).hide();
-    $('#summernote').summernote({
-        placeholder: 'Hi Sandeep, Write something today',
-
-        tabsize: 2,
-        codemirror: { // codemirror options
-            theme: 'monokai'
-        },
-        height: 650,
-
-
-        disableResizeEditor: true
-    });
-});
-
 
 // var save = function() {
 //     var markup = $('#summernote').summernote('code');
@@ -90,7 +71,7 @@ $("#tagline").on('keyup', function (e) {
         cleanSearch();
 
         var notif= document.getElementsByClassName("notification");
-        $(notif).hide();
+        $(notif).addClass("is-hidden");
 
     }
     if(beforeVal && beforeVal.length >1){
@@ -105,20 +86,37 @@ $("#tagline").on('keyup', function (e) {
             success: function (data) {
 
                 for (var i in data){
+
+                    //Get the Id of the tags
+                    var tagIds = $.map($(".saveTag"), function(n, i){
+                        return n.id;
+                    });
+
+
+                    if($.inArray(data[i].id.toString(),tagIds) < 0){
+
                         var anchor = document.createElement("a");
                         anchor.setAttribute('class', 'panel-block');
                         anchor.setAttribute('id', data[i].tagName);
                         anchor.setAttribute('onclick','addToInputLine(this.id)');
                         anchor.setAttribute('value',data[i].id);
-                       $(anchor).text(data[i].tagName);
-                   document.getElementById('searchVal').appendChild(anchor);
+                        $(anchor).text(data[i].tagName);
+                        document.getElementById('searchVal').appendChild(anchor);
+                    }else{
+
+
+                    }
+
+
                 }
+
 
             },
             error: function (e) {
 
-                var notif = document.getElementsByClassName("notification");
-                $(notif).show();
+
+                var notif= document.getElementsByClassName("notification");
+                $(notif).removeClass("is-hidden");
 
             }
         });
@@ -136,7 +134,7 @@ function addToInputLine(event) {
 
 
     cleanSearch();
-    console.log("checking the event "+ event);
+
     var tagValue = event;
     //set the tagvalue to the inputLine
     var inputDom = document.getElementById("tagline");
@@ -158,7 +156,7 @@ function addTagGroup(tagValue) {
         timeout: 100000,
         success: function (data) {
 
-            console.log(data[0].tagName );
+
             var div = document.createElement('div');
             div.setAttribute('class','control');
             $(div).addClass(data[0].tagName );
@@ -198,6 +196,14 @@ From here all the function and code is related to following functionality
 
  */
 
+$('.close-modal').on('click', function (e) {
+
+
+    var modalid = document.getElementById('modal-tag-create');
+    modalid.classList.remove('is-active');
+});
+
+
 function saveArticle() {
 
     //Get the Id of the tags
@@ -206,20 +212,42 @@ function saveArticle() {
     });
 
     var title = document.getElementById('article-title').value;
-    var content = $('#summernote').summernote('code');
-
+    var content =  tinyMCE.activeEditor.getContent();
 
         // article object
-        var article = {
+        var article =[];
+      //  var tagsList=[];
+
+        article.push({
             "title": title,
-            "article": content,
-            "tagId":tagIds
-        }
+            "content":encodeURIComponent(content),
+           "tags": tagIds
 
-        console.log(article);
+        });
+
+        $.ajax({
+            url: "/api/v1/article",
+            type: "post",
+            data: JSON.stringify(article),
+            datatype:"json",
+            contentType: "application/json; charset=utf-8",
+            success: function(d) {
 
 
+                var modalid = document.getElementById("modal-tag-create");
+                modalid.classList.add('is-active');
+                tinyMCE.get('myTextarea').setContent('');
+                $('#article-title').val("");
+                $("#addtag").empty();
 
-    
+            },error: function (e) {
+
+                var notif = document.getElementsByClassName("notification");
+                $(notif).show();
+
+            }
+        });
+
+
 }
 

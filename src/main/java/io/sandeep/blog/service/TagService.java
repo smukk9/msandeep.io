@@ -1,8 +1,10 @@
 package io.sandeep.blog.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import io.sandeep.blog.entity.Tag;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,4 +16,7 @@ public interface TagService {
     boolean saveJsonTag(JsonNode actualObj);
      boolean createTag(String tag);
      Optional<List<Tag>> searchTagsByName(String tagName);
+
+     //get all tag by the counto of articlerefference
+     ArrayNode tagCount();
 }

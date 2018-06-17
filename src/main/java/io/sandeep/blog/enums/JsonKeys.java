@@ -4,7 +4,8 @@ public enum JsonKeys {
     TAGNAME("tagnames"),
     TAGS("tags"),
     TITLE("title"),
-    CONTENT("content");
+    CONTENT("content"),
+    YEAR("year");
 
 
 

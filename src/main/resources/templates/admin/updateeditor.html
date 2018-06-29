@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/headerFragment ::headerFragment">
+
+<script
+        src="http://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
+
+
+</head>
+<body>
+
+<nav th:replace="fragments/navbarFragment :: navbarFragment" />
+<br/>
+<section class="container">
+    <div class="columns is-mobile is-centered">
+        <h1 class="title is-2">Editor</h1>
+    </div>
+    <div class="space" th:if="${isUpdateTrigger}">
+        <div class="field">
+            <div class="control">
+                <a class="title is-success action"> Update  Article</a>
+                <input class="input is-primary" id="article-title" type="text" placeholder="Article Title" />
+            </div>
+        </div>
+    </div>
+
+    <textarea id="myTextarea">Hello, World!</textarea>
+    <br/>
+    <div class="control">
+        <input class="input is-primary" id="tagline" type="text" placeholder="Add tags" />
+    </div>
+
+    <nav class="panel" id="searchVal">
+
+
+    </nav>
+    <nav class="notification is-danger is-hidden">
+        <button class="delete"></button>
+       Sorry, no tag found Sandeep
+    </nav>
+    <br/>
+
+    <div class="field is-grouped is-grouped-multiline" id="addtag">
+
+    </div>
+
+
+
+    <br/>
+    <br/>
+    <nav class="level">
+        <div class="level-left">
+        <div class="level-item has-text-centered">
+            <div>
+                <p class="control">
+                    <a class="button is-danger  ">
+                        <span>Undo</span>
+                        <span class="icon is-small">
+                            <i class="fas fa-undo"></i>
+                        </span>
+                    </a>
+                    <a class="button is-danger is-hoverable">
+                        <span>Redo</span>
+                        <span class="icon is-small">
+                            <i class="fas redo"></i>
+                        </span>
+                    </a>
+                </p>
+            </div>
+        </div>
+        </div>
+        <div class="level-left">
+        <div class="level-item has-text-centered">
+            <div>
+                <p class="control">
+                    <a class="button is-danger is-outlined">
+                        <span>Clear</span>
+                        <span class="icon is-small"><i class="fas fa-times"></i></span>
+                    </a>
+                    <a class="button is-link" id="submit">
+                        <span onclick="saveArticle()" id="save-article">Save Changes</span>
+                        <span class="icon is-small">
+                                <i class="fas fa-check"></i>
+                                </span>
+                    </a>
+
+                </p>
+            </div>
+        </div>
+        </div>
+    </nav>
+
+    <div id="modal-tag-create" class="modal is-mobile ">
+
+        <div class="modal-background close-modal"></div>
+        <div class="modal-card">
+            <section class="modal-card-body">
+
+                <h1 class="title is-1">Article Saved</h1>
+            </section>
+            </div>
+    </div>
+
+
+</section>
+<br/>
+<div th:replace="fragments/headerFragment ::before-body-scripts"></div>
+
+<script type="text/javascript" src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
+<script type="text/javascript">
+    tinymce.init({
+        selector: '#myTextarea',
+        theme: 'modern',
+        max_height: 500,
+        max_width: 500,
+        min_height: 600,
+        min_width: 400,
+        plugins: [
+            'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
+            'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+            'save table contextmenu directionality emoticons template paste textcolor'
+        ],
+
+        toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons',
+        extended_valid_elements : "a[class|name|href|target|title|onclick|rel],script[type|src],iframe[src|style|width|height|scrolling|marginwidth|marginheight|frameborder],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name]"
+    });
+</script>
+<script th:src="@{/js/updateeditor.js}"></script>
+<script th:src="@{/webjars/jquery/3.3.1-1/jquery.js}"></script>
+</body>
+<footer th:replace="fragments/footerFragment :: footerFragment"></footer>
+
+
+
+</html>

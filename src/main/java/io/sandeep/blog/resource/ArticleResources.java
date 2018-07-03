@@ -133,6 +133,34 @@ public class ArticleResources {
         List<Article> articles = articleService.getLastestPageable();
         return  ResponseEntity.ok(articles);
     }
+
+    @PutMapping
+    public ResponseEntity<?> updateArticle(@RequestBody String article) throws IOException {
+
+
+        logger.info("Request posted from update page: {}", article);
+        ObjectMapper mapper = new ObjectMapper();
+
+
+        JsonNode actualObj = mapper.readTree(article);
+        JsonNode firstNode = actualObj.get(0);
+        String content=firstNode.get(JsonKeys.CONTENT.getValue()).toString();
+        logger.info("Recevied the udpate Json: {}", firstNode);
+        boolean checkHTML = Jsoup.isValid(content, Whitelist.basic());
+
+        Article saveArticle = articleService.UpdateJsonArticle(firstNode);
+        if (checkHTML){
+
+            logger.info("valid html for update: {}", content);
+        }else
+        {
+            Document dirtyDoc=Jsoup.parse(content);
+            Document cl = new Cleaner(Whitelist.basic()).clean(dirtyDoc);
+            logger.info("cleaned html: {}",cl );
+        }
+        return ResponseEntity.ok().body(content);
+    }
+
 }
 
 

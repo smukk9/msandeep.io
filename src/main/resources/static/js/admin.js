@@ -142,7 +142,7 @@ $(document).ready(function(){
                 var arts = $.parseJSON(element.articleArray);
 
                 arts.forEach(function(ets){
-
+                    clean_title = ets.title.substring(1, ets.title.length-1);
                     var tr_arts = document.createElement("tr");
                     art_href="article/"+ets.id;
                     edit_href ="/editor/update/"+ets.id;
@@ -151,7 +151,7 @@ $(document).ready(function(){
                     var   month = month_name.toLocaleDateString(locale,{month:"long"});
                     tr_arts.innerHTML=`
                  <td> <a class="is-link" href=${art_href}>${month}</a></td>
-                    <td> <a class="is-link" href=${art_href}>${ets.title}</a></td>
+                    <td> <a class="is-link" href=${art_href}>${clean_title}</a></td>
                     <td><a class="is-link" href=${edit_href}>Edit</a></td>
                     <td><a class="is-link" href=${edit_href}>Delete</a></td>
                  </td>

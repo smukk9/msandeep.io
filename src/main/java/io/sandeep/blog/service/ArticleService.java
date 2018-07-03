@@ -18,4 +18,5 @@ public interface ArticleService {
      Article saveJsonArticle(JsonNode actualObj);
      ArrayNode  getarchives() throws JsonProcessingException;
      List<Article> getLastestPageable();
+     Article UpdateJsonArticle(JsonNode actualObj);
 }

@@ -193,5 +193,67 @@ public class ArticleServiceImpl implements ArticleService {
         return  topArticle.getContent();
     }
 
+    public Article UpdateJsonArticle(JsonNode  article) {
 
+        //Update : get user
+
+        Authentication authentication = authenticationFacade.getAuthentication();
+        Optional<String > username = Optional.ofNullable(authentication.getName());
+
+        User user;
+        if(!username.isPresent()){
+            logger.info("checking  update json  if:{}",username.isPresent());
+            user = userRepository.findByUsername(username.get());
+        }else{
+            logger.info("checking else the if");
+            user = userRepository.findByUsername("smukk9");
+        }
+
+        int id = article.get("id").asInt();
+        Optional<Article> updateArticle = articleRepository.findById(id);
+        JsonNode tagCount = article.get(JsonKeys.TAGS.getValue());
+        logger.info("JsonNode update request the request: {}", tagCount);
+        List<Tag> tagSet = new LinkedList<>();
+       // List<Tag> existingTags = updateArticle.get().getTags();
+        if (tagCount.isArray()) {
+            for (final JsonNode objNode : tagCount) {
+
+
+                String cleanTag = objNode.toString().substring(1, objNode.toString().length()-1);
+                logger.info("Tag not present checking for arraay condit, updating the tags:{}", cleanTag);
+                Tag tag = tagRepository.findByTagName(cleanTag);
+
+                    logger.info("Retirived tag: {}", tag);
+                    tagSet.add(tag);
+
+
+            }
+        }else
+        {
+
+            String putTag=tagCount.get(0).toString().substring(1,tagCount.get(0).toString().length()-1);
+            logger.info("Tag not present, updating the tags:{}",putTag);
+            Tag tag = tagRepository.findByTagName(putTag);
+
+
+                tagSet.add(tag);
+
+        }
+
+        updateArticle.get().setAuthor(user);
+        updateArticle.get().setTags(tagSet);
+        updateArticle.get().setContent(article.get(JsonKeys.CONTENT.getValue()).toString());
+        updateArticle.get().setTitle(article.get(JsonKeys.TITLE.getValue()).toString());
+
+//        Article udpateArticle = updateArticle.builder()
+//                .author(user)
+//                .title(article.get(JsonKeys.TITLE.getValue()).toString())
+//                .content(article.get(JsonKeys.CONTENT.getValue()).toString())
+//                .tags(tagSet)
+//                .build();
+
+        logger.info("Update Article : {}", updateArticle.get());
+        return  articleRepository.save(updateArticle.get());
+
+    }
 }

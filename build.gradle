@@ -17,6 +17,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'docker'
 apply plugin: 'application'
 
+
 group = 'io.sandeep'
 version = '0.0.1-SNAPSHOT'
 //sourceCompatibility JavaVersion.VERSION_1_8
@@ -37,8 +38,11 @@ dependencies {
 	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.8.0'
     compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.8.0'
 	runtime('com.h2database:h2')
-	compile 'mysql:mysql-connector-java'
-    compile("org.springframework.boot:spring-boot-starter-actuator")
+// https://mvnrepository.com/artifact/mysql/mysql-connector-java
+	compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.11'
+
+
+	compile("org.springframework.boot:spring-boot-starter-actuator")
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('org.springframework.security:spring-security-test')
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-thymeleaf

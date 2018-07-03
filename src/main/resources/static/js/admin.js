@@ -30,8 +30,7 @@ function createTag() {
 
     });
 
-    console.log("print")
-    console.log(JSON.stringify(tags));
+
     
 }
 
@@ -110,3 +109,66 @@ function removeTag(e) {
 
 //Get all article for that year tag
 //  /article?getBy="year"
+
+
+$(document).ready(function(){
+    $.ajax({
+        type: "GET",
+        url: "/api/v1/article/archives",
+        cache: true,
+        timeout: 100000,
+        success: function (data) {
+
+            // console.log(data);
+
+
+
+            data.forEach(function (element){
+
+                var tr_year = document.createElement("tr");
+                year_href="/"+element.year;
+
+                tr_year.innerHTML=`
+                <td>
+                     <a href="${year_href}">
+                <h1 class="title is-4 is-primary">${element.year}</h1>
+                      </a> 
+                </td>
+            `;
+
+                document.getElementById("article-body").appendChild(tr_year);
+
+
+                var arts = $.parseJSON(element.articleArray);
+
+                arts.forEach(function(ets){
+                    clean_title = ets.title.substring(1, ets.title.length-1);
+                    var tr_arts = document.createElement("tr");
+                    art_href="article/"+ets.id;
+                    edit_href ="/editor/update/"+ets.id;
+                    var month_name = new Date(ets.createDate);
+                    locale="en-us";
+                    var   month = month_name.toLocaleDateString(locale,{month:"long"});
+                    tr_arts.innerHTML=`
+                 <td> <a class="is-link" href=${art_href}>${month}</a></td>
+                    <td> <a class="is-link" href=${art_href}>${clean_title}</a></td>
+                    <td><a class="is-link" href=${edit_href}>Edit</a></td>
+                    <td><a class="is-link" href=${edit_href}>Delete</a></td>
+                 </td>
+            `;
+                    document.getElementById("article-body").appendChild(tr_arts);
+
+                });
+
+            });
+
+
+
+        },
+        error: function (e) {
+
+
+
+        }
+    });
+});

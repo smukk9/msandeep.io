@@ -55,7 +55,7 @@ $(document).ready(function(){
 
 
             data.forEach(function (element){
-                console.log(element)
+                console.log(element);
 
                 var card_div = document.createElement("div");
                 card_div.setAttribute("class", "column");

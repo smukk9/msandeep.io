@@ -1,12 +1,4 @@
 
-// var save = function() {
-//     var markup = $('#summernote').summernote('code');
-//     console.log(markup);
-//     $('#summernote').summernote('insertText', 'hello world');
-// };
-
-
-
 //Delete a tag from the tag display planel
 function removeTag(e) {
 
@@ -76,7 +68,7 @@ $("#tagline").on('keyup', function (e) {
     }
     if(beforeVal && beforeVal.length >1){
 
-      cleanSearch()
+        cleanSearch()
 
         $.ajax({
             type: "GET",
@@ -185,16 +177,84 @@ function addTagGroup(tagValue) {
 
 
 
-/*
-From here all the function and code is related to following functionality
+$(document).ready(function(){
 
-    1-Save Article
-    2-clear article page
-    3-Temporary stoarge function
-        Redo and Undo
-    4-Cancel .
+    var urlPath = document.URL.split("/");
+    var articleId = urlPath[urlPath.length-1];
 
- */
+    console.log(articleId);
+    $.ajax({
+        type: "GET",
+        url: "/api/v1/article/"+articleId,
+        cache: true,
+        timeout: 100000,
+        success: function (data) {
+
+            //set title
+            var cleanTitle = data.title.substring(1, data.title.length-1);
+            ;
+            console.log(cleanTitle);
+
+            var tele = document.getElementById("article-title");
+            $(tele).val(cleanTitle);
+
+            // set content
+            var clean_content= data.content.replace(/^"%3Cp%3E+/,'');
+
+            console.log(clean_content);
+            var decoded = decodeURIComponent(clean_content.substring(0,clean_content.length-1));
+            var acontent=document.getElementById('article-content')
+            $(myTextarea).html(decoded)
+
+            //set tags
+            data.tags.forEach(function(element) {
+               //  var tag_anchor = document.createElement('a')
+               //  tag_anchor.setAttribute('class','tag is-rounded is-size-6 is-success');
+               //  tag_anchor.setAttribute('id',element.tagName);
+               //  var tag_anchor_text = document.createTextNode(element.tagName);
+               //  console.log(tag_anchor)
+               //
+               //
+               //  document.getElementById('addtag').appendChild(tag_anchor);
+               // var tagd= document.getElementById(element.tagName)
+               //  $(tagd).text(element.tagName);
+
+                var div = document.createElement('div');
+                div.setAttribute('class','control');
+                $(div).addClass(element.tagName );
+                div.innerHTML=`
+            <div class="tags has-addons">
+                <a class="tag is-link ">${element.tagName  }</a>
+                <a class="tag is-delete saveTag" id=${element.tagName } onclick="removeTag(this.id)"></a>
+            </div>
+            `;
+                document.getElementById('addtag').appendChild(div);
+
+
+
+            });
+
+            //set year in breadcrumb
+
+            var date = new Date(data.createDate);
+            var year= date.getFullYear();
+
+
+
+
+        },
+        error: function (e) {
+
+            var acontent=document.getElementById('article-content')
+            $(acontent).text("No article was found")
+
+        }
+    });
+});
+
+
+
+//Update the article function
 
 $('.close-modal').on('click', function (e) {
 
@@ -214,40 +274,42 @@ function saveArticle() {
     var title = document.getElementById('article-title').value;
     var content =  tinyMCE.activeEditor.getContent();
 
-        // article object
-        var article =[];
-      //  var tagsList=[];
+    // article object
+    var article =[];
+    //  var tagsList=[];
+    var urlPath = document.URL.split("/");
+    var articleId = urlPath[urlPath.length-1];
+    article.push({
+        "id":articleId,
+        "title": title,
+        "content":encodeURIComponent(content),
+        "tags": tagIds
 
-        article.push({
-            "title": title,
-            "content":encodeURIComponent(content),
-           "tags": tagIds
+    });
 
-        });
-
-        $.ajax({
-            url: "/api/v1/article",
-            type: "post",
-            data: JSON.stringify(article),
-            datatype:"json",
-            contentType: "application/json; charset=utf-8",
-            success: function(d) {
+    console.log(article);
+    $.ajax({
+        url: "/api/v1/article",
+        type: "put",
+        data: JSON.stringify(article),
+        datatype:"json",
+        contentType: "application/json; charset=utf-8",
+        success: function(d) {
 
 
-                var modalid = document.getElementById("modal-tag-create");
-                modalid.classList.add('is-active');
-                tinyMCE.get('myTextarea').setContent('');
-                $('#article-title').val("");
-                $("#addtag").empty();
+            var modalid = document.getElementById("modal-tag-create");
+            modalid.classList.add('is-active');
+            tinyMCE.get('myTextarea').setContent('');
+            $('#article-title').val("");
+            $("#addtag").empty();
 
-            },error: function (e) {
+        },error: function (e) {
 
-                var notif = document.getElementsByClassName("notification");
-                $(notif).show();
+            var notif = document.getElementsByClassName("notification");
+            $(notif).show();
 
-            }
-        });
+        }
+    });
 
 
 }
-

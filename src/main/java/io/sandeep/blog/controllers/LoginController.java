@@ -15,22 +15,22 @@ public class LoginController {
     }
 
     @RequestMapping("/article")
-    public String article(ModelMap map){ return "/article/article";}
+    public String article(ModelMap map){ return "article/article";}
 
 
     @RequestMapping("/admin")
-    public String admin(ModelMap map){ return "/admin/admin";}
+    public String admin(ModelMap map){ return "admin/admin";}
 
     @RequestMapping("/admin/editor")
-    public String editor(ModelMap map){ return "/admin/editor";}
+    public String editor(ModelMap map){ return "admin/editor";}
 
 
     @RequestMapping("/archive")
-    public String archive(ModelMap map){ return "/archive/archive";}
+    public String archive(ModelMap map){ return "archive/archive";}
 
     @RequestMapping("/create/article")
     public ModelAndView createArticleView(){
-    ModelAndView modelAndView = new ModelAndView("/admin/editor");
+    ModelAndView modelAndView = new ModelAndView("admin/editor");
     modelAndView.addObject("isArticleTrigger","true");
 
     return modelAndView;

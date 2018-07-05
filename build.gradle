@@ -58,6 +58,6 @@ dependencies {
 }
 
 distDocker {
-	exposePort 8595
+	exposePort 8080
 	setEnvironment 'JAVA_OPTS', '-Dspring.profiles.active=docker'
 }

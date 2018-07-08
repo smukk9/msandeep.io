@@ -28,7 +28,7 @@ $(document).ready(function(){
                 var arts = $.parseJSON(element.articleArray);
 
                 arts.forEach(function(ets){
-
+                    clean_title = ets.title.substring(1, ets.title.length-1);
                     var tr_arts = document.createElement("tr");
                     art_href="article/"+ets.id;
 
@@ -37,7 +37,7 @@ $(document).ready(function(){
                  var   month = month_name.toLocaleDateString(locale,{month:"long"});
                  tr_arts.innerHTML=`
                  <td> <a class="is-link" href=${art_href}>${month}</a></td>
-                    <td> <a class="is-link" href=${art_href}>${ets.title}</a></td>
+                    <td> <a class="is-link" href=${art_href}>${clean_title}</a></td>
                  </td>
             `;
                     document.getElementById("article-body").appendChild(tr_arts);
@@ -77,4 +77,31 @@ $(document).ready(function(){
 
         }
     });
+});
+
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    // Get all "navbar-burger" elements
+    var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+    // Check if there are any navbar burgers
+    if ($navbarBurgers.length > 0) {
+
+        // Add a click event on each of them
+        $navbarBurgers.forEach(function ($el) {
+            $el.addEventListener('click', function () {
+
+                // Get the target from the "data-target" attribute
+                var target = $el.dataset.target;
+                var $target = document.getElementById(target);
+
+                // Toggle the class on both the "navbar-burger" and the "navbar-menu"
+                $el.classList.toggle('is-active');
+                $target.classList.toggle('is-active');
+
+            });
+        });
+    }
+
 });

@@ -28,7 +28,7 @@ public class EditorController {
         Optional<Article> article= articleService.getArticleById(id);
 
 
-        ModelAndView modelAndView = new ModelAndView("/admin/updateeditor");
+        ModelAndView modelAndView = new ModelAndView("admin/updateeditor");
         modelAndView.addObject("isUpdateTrigger","true");
 
 

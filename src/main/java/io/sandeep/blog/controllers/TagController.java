@@ -11,6 +11,6 @@ public class TagController {
 
 
     @GetMapping
-    public String tags(ModelMap map){ return "/tag/tag";}
+    public String tags(ModelMap map){ return "tag/tag";}
 
 }

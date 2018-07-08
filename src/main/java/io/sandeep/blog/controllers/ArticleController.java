@@ -13,7 +13,7 @@ public class ArticleController {
     @GetMapping("/{id}")
     public String showArticle(ModelMap map){
 
-        return "/article/article";
+        return "article/article";
     }
 
 }

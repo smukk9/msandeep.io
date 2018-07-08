@@ -59,5 +59,7 @@ dependencies {
 
 distDocker {
 	exposePort 8080
+	push = project.hasProperty('push')
+	tag = 'smukk9/app-msandeep-io'
 	setEnvironment 'JAVA_OPTS', '-Dspring.profiles.active=docker'
 }

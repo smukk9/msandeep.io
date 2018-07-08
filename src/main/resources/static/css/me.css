@@ -5,14 +5,14 @@
 
 body{
     margin:0;
-    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-family: 'Roboto';
     font-size:17px;
     color:#889196;
     line-height:1.6;
 }
 
 #showcase{
-    background-image:url("/images/lading.jpg");
+    background-image:url("/images/me.jpg");
     background-size:cover;
     background-position:center;
     height:100vh;

@@ -1,6 +1,6 @@
 version : '2'
 services:
-  mysqldbserver:
+  my-mysql:
     image: mysql:latest
     ports:
       - "3306:3306"
@@ -16,15 +16,15 @@ services:
     volumes:
       - mio-mysqlvolume:/var/lib/mysql
 
-  springappserver:
+  mio-app:
     image: smukk9/msandeep-io:1.0
     ports:
       - "8080:8080"
     links:
-      - mysqldbserver
+      - mio-msyql
     depends_on:
-      - mysqldbserver
+      - mio-mysql
     container_name: mio-app
 volumes:
-    mio-mysqlvolume:
+    mio-mysql-volume:
       external: true

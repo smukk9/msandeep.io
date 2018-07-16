@@ -1,6 +1,6 @@
 version : '2'
 services:
-  mysqldbserver:
+  mio-mysql:
     image: smukk9/mysql-msandeep-io
     ports:
       - "3306:3306"
@@ -12,13 +12,19 @@ services:
       MYSQL_ROOT_PASSWORD: p4SSW0rd
 
       DEFAULT_AUTHENTICATION_PLUGIN: mysql_native_password
-    container_name: mysqldbserver
+    container_name: mio-mysql
+    volumes:
+      - mio-mysqlvolume:/var/lib/mysql
 
-  springappserver:
+  mio-app:
           image: smukk9/msandeep-io:1.0
     ports:
       - "8080:8080"
     links:
-      - mysqldbserver
+      - mio-mysql
     depends_on:
-      - mysqldbserver
+      - mio-mysql
+    container_name: mio-app
+volumes:
+    mio-mysql-volume:
+      external: true

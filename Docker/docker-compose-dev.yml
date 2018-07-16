@@ -12,13 +12,19 @@ services:
       MYSQL_ROOT_PASSWORD: p4SSW0rd
 
       DEFAULT_AUTHENTICATION_PLUGIN: mysql_native_password
-    container_name: mysqldbserver
+    container_name: mio-mysql
+    volumes:
+      - mio-mysqlvolume:/var/lib/mysql
 
   springappserver:
-    image: io.sandeep/msadeep-io:0.0.1-SNAPSHOT
+    image: smukk9/msandeep-io:1.0
     ports:
       - "8080:8080"
     links:
       - mysqldbserver
     depends_on:
       - mysqldbserver
+    container_name: mio-app
+volumes:
+    mio-mysqlvolume:
+      external: true

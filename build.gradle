@@ -18,7 +18,7 @@ apply plugin: 'docker'
 apply plugin: 'application'
 
 
-group = 'io.sandeep'
+group = 'msandeep-io'
 version = '0.0.1-SNAPSHOT'
 //sourceCompatibility JavaVersion.VERSION_1_8
 //targetCompatibility JavaVersion.VERSION_1_8
@@ -60,6 +60,8 @@ dependencies {
 distDocker {
 	exposePort 8080
 	push = project.hasProperty('push')
-	tag = 'smukk9/app-msandeep-io'
+	applicationName = 'app'
+	tag  = 'smukk9/msandeep-io'
+	tagVersion = '1.0'
 	setEnvironment 'JAVA_OPTS', '-Dspring.profiles.active=docker'
 }

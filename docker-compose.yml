@@ -15,7 +15,7 @@ services:
     container_name: mysqldbserver
 
   springappserver:
-    image: smukk9/msandeep-io
+          image: smukk9/msandeep-io:1.0
     ports:
       - "8080:8080"
     links:

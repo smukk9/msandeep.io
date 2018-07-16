@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <body>
-<nav th:fragment="navbarFragment" class="navbar  is-fixed-top is-transparent " style="background-color: transparent;
+<nav th:fragment="navbarFragment" class="navbar is-dark  is-fixed-top  " style="
              background-image: none;" role="navigation" aria-label="dropdown navigation">
     <div class="navbar-brand nav-color">
 
@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    <div class="navbar-menu nav-color " id="navMenu">
+    <div class="navbar-menu  " id="navMenu">
         <div class="navbar-end">
             <div class="navbar-item has-dropdown is-hoverable aria-haspopup=true">
                 <a sec:authorize="isAuthenticated()" class="navbar-link" href="/">

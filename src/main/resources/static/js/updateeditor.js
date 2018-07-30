@@ -94,6 +94,7 @@ $("#tagline").on('keyup', function (e) {
                         anchor.setAttribute('value',data[i].id);
                         $(anchor).text(data[i].tagName);
                         document.getElementById('searchVal').appendChild(anchor);
+
                     }else{
 
 
@@ -155,7 +156,7 @@ function addTagGroup(tagValue) {
             div.innerHTML=`
             <div class="tags has-addons">
                 <a class="tag is-link ">${data[0].tagName }</a>
-                <a class="tag is-delete saveTag" id=${data[0].id} onclick="removeTag(this.id)"></a>
+                <a class="tag is-delete saveTag" id=${data[0].tagName} onclick="removeTag(this.id)"></a>
             </div>
             `;
             document.getElementById('addtag').appendChild(div);
@@ -270,7 +271,7 @@ function saveArticle() {
     var tagIds = $.map($(".saveTag"), function(n, i){
         return n.id;
     });
-
+    console.log(tagIds);
     var title = document.getElementById('article-title').value;
     var content =  tinyMCE.activeEditor.getContent();
 

@@ -8,7 +8,7 @@
 
 
 
-        <div class="navbar-burger" id="burger-menu" data-target="navMenu">
+        <div class="navbar-burger is-dark" id="burger-menu" data-target="navMenu">
             <span ></span>
             <span></span>
             <span></span>
@@ -17,11 +17,15 @@
 
     <div class="navbar-menu  " id="navMenu">
         <div class="navbar-end">
+
             <div class="navbar-item has-dropdown is-hoverable aria-haspopup=true">
+
                 <a sec:authorize="isAuthenticated()" class="navbar-link" href="/">
+                    <span><i class="fas fa-home"></i></span>&nbsp;
                     <span  sec:authentication="name"></span>
                 </a>
                 <a sec:authorize="!isAuthenticated()" class="navbar-link" href="/">
+                    <span><i class="fas fa-home"></i></span>&nbsp;
                     <span>Home</span>
                 </a>
 

@@ -179,9 +179,32 @@ public class TagServiceImpl implements TagService {
 
     }
 
+    @Override
+    public List<Article> getArticleByTagId(int id) {
+
+        List<Article> allArticles = articleRepository.findAll();
+        Tag tag = tagRepository.getOne(id);
+        List<Article> responseArts=new ArrayList<>();
+
+        for(Article article : allArticles){
+
+            List<Tag> tags = article.getTags();
+
+            if(tags.contains(tag)){
+
+                logger.info("the tag is available: {}",tag );
+                responseArts.add(article);
+            }else{
+
+                logger.info("Tag not available : {}", tag );
+            }
 
 
 
+        }
+
+        return responseArts;
+    }
 
 
 }

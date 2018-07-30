@@ -1,3 +1,18 @@
 Issue:
--After the application runner is done. Unable to save the next ID;
+
+
+-Update the blog runner to run only if the data is not preset.(do not create duplicats)
+
+
+
+
+Fixed
+-After the application runner is done. Unable to save the next ID;: Fixed
 -tag is not saved
+-change the nav to dark in mobile view and update the home and name in mobile view
+
+======================
+
+Features:
+
+-On article page, add tag routing to a new tag view page

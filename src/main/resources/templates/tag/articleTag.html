@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top" xmlns:th="http://www.thymeleaf.org">
+<title>Tag</title>
+<head th:replace="fragments/headerFragment ::headerFragment"></head>
+
+<body>
+
+<nav th:replace="fragments/navbarFragment :: navbarFragment"/>
+
+<section class="section">
+
+        <div class="columns" id="add_cards">
+
+
+
+
+        </div>
+
+</section>
+<br/>
+
+<div th:replace="fragments/headerFragment ::before-body-scripts"></div>
+<script th:src="@{/js/articleTag.js}"></script>
+
+</body>
+<footer th:replace="fragments/footerFragment :: footerFragment"></footer>
+
+
+
+</html>

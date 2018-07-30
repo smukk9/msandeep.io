@@ -103,4 +103,16 @@ public class TagResources  {
     }
 
 
+    @GetMapping("/{id}/article")
+    public ResponseEntity<?> getArticleByTagId(@PathVariable int id){
+
+        List<Article> responseArts= tagService.getArticleByTagId(id);
+
+        if( responseArts.isEmpty()){
+
+            ResponseEntity.notFound().build();
+        }
+            return ResponseEntity.ok().body(responseArts);
+
+    }
 }

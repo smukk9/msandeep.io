@@ -19,7 +19,7 @@ services:
   mio-app:
     image: smukk9/msandeep-io:1.0
     ports:
-      - "80:8080"
+      - "8080:80"
     links:
       - mio-mysql
     depends_on:

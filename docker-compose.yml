@@ -10,10 +10,6 @@ services:
       MYSQL_USER: dbuser
       MYSQL_DATABASE: demo
       MYSQL_ROOT_PASSWORD: p4SSW0rd
-      VIRTUAL_HOST: msandeep.io
-      LETSENCRYPT_HOST: msandeep.io
-      LETSENCRYPT_EMAIL: smukk9@gmail.com
-
       DEFAULT_AUTHENTICATION_PLUGIN: mysql_native_password
     container_name: mio-mysql
     volumes:
@@ -22,7 +18,7 @@ services:
   mio-app:
     image: smukk9/msandeep-io:1.0
     expose:
-      - 8080
+      - 80
     environment:
       VIRTUAL_HOST: msandeep.io
       LETSENCRYPT_HOST: msandeep.io

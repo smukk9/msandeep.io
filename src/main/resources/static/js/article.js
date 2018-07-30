@@ -17,6 +17,8 @@ $(document).ready(function(){
             var tele = document.getElementById("article-title");
             $(tele).text(cleanTitle);
 
+
+
            // set content
             var decoded = decodeURIComponent(data.content);
           var acontent=document.getElementById('article-content')
@@ -24,9 +26,13 @@ $(document).ready(function(){
 
             //set tags
             data.tags.forEach(function(element) {
+
+                var tagHref= "/tag/"+element.id+"/articles"
                 var tag_anchor = document.createElement('a')
                 tag_anchor.setAttribute('class','tag is-rounded is-size-6 is-success');
+
                 tag_anchor.setAttribute('id',element.tagName);
+                tag_anchor.setAttribute("href", tagHref);
                 var tag_anchor_text = document.createTextNode(element.tagName);
              //   tag_anchor.setContent('data.tagName');
                 tag_anchor.appendChild(tag_anchor_text);
@@ -39,8 +45,13 @@ $(document).ready(function(){
             var date = new Date(data.createDate);
             var year= date.getFullYear();
 
+            var ayear = document.createElement("a");
+            ayear.setAttribute("href","/archive");
+            ayear.setAttribute("id", "liyear");
 
-
+            document.getElementById("cyear").appendChild(ayear);
+            $(liyear).text(year);
+            console.log(ayear)
 
         },
         error: function (e) {

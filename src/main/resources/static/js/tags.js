@@ -14,7 +14,7 @@ $(document).ready(function(){
 
             //Create a tr element and append the tag element over thee loop
 
-          var  tag_href = "/tags/"+element.tagId;
+          var  tag_href = "/tag/"+element.tagId+"/articles";
             var tr_tag = document.createElement("tr");
            console.log(tag_href);
 

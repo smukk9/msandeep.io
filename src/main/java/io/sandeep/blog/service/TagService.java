@@ -2,6 +2,7 @@ package io.sandeep.blog.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import io.sandeep.blog.entity.Article;
 import io.sandeep.blog.entity.Tag;
 
 import java.util.HashMap;
@@ -19,4 +20,5 @@ public interface TagService {
 
      //get all tag by the counto of articlerefference
      ArrayNode tagCount();
+     List<Article> getArticleByTagId(int id);
 }

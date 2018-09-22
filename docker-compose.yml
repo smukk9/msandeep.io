@@ -33,6 +33,6 @@ volumes:
       external: true
 
 networks:
-    default:
+      default:
         external:
             name: nginx-proxy

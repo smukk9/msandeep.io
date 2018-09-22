@@ -51,7 +51,6 @@ $(document).ready(function(){
 
             document.getElementById("cyear").appendChild(ayear);
             $(liyear).text(year);
-            console.log(ayear)
 
         },
         error: function (e) {

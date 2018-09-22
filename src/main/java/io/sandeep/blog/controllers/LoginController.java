@@ -37,7 +37,6 @@ public class LoginController {
     return modelAndView;
     }
 
-    @RequestMapping("/admin/markdown")
-    public String markdown(ModelMap map){ return "admin/markdown";}
+ 
 }
 

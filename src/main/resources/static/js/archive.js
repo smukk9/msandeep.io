@@ -33,10 +33,12 @@ $(document).ready(function(){
                     art_href="article/"+ets.id;
 
                     var month_name = new Date(ets.createDate);
+                   var dateyear = month_name.getDate();
+                   console.log(dateyear)
                     locale="en-us";
                  var   month = month_name.toLocaleDateString(locale,{month:"long"});
                  tr_arts.innerHTML=`
-                 <td> <a class="is-link" href=${art_href}>${month}</a></td>
+                 <td> <a class="is-link" href=${art_href}>${month} &nbsp;${dateyear}</a></td>
                     <td> <a class="is-link" href=${art_href}>${clean_title}</a></td>
                  </td>
             `;

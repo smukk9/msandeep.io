@@ -25,6 +25,7 @@ public class LoginController {
     public String editor(ModelMap map){ return "admin/editor";}
 
 
+
     @RequestMapping("/archive")
     public String archive(ModelMap map){ return "archive/archive";}
 
@@ -35,5 +36,7 @@ public class LoginController {
 
     return modelAndView;
     }
+
+ 
 }
 

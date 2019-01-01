@@ -10,8 +10,9 @@ import io.sandeep.blog.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.ApplicationArguments;
+    import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 
@@ -37,15 +38,22 @@ public class BlogApplicationRunner implements ApplicationRunner  {
     @Autowired
     private TagRepository tagRepository;
 
+    @Autowired
+    private Environment env;
+
+
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
 
+        String adminName = env.getProperty("ADMINUSER");
+        String adminPassword = env.getProperty("ADMINPASSWORD");
         logger.info("********Runner*************:");
 
         Set<Role> userRoles = new HashSet<>();
         Role role =  Role.builder().role("ROLE_ADMIN").build();
         userRoles.add(role);
-        User user =  User.builder().username("smukk9").email("smukk9@gmail.com").password("sandeep").roles(userRoles).active(1).build();
+        User user =  User.builder().username(adminName).email("smukk9@gmail.com").password(adminPassword).roles(userRoles).active(1).build();
         userService.save(user);
         logger.info("***********User setup complete**********");
         logger.info(": User that is saved{}", user);
@@ -77,6 +85,6 @@ public class BlogApplicationRunner implements ApplicationRunner  {
         logger.info("saved article : {}", article1);
        logger.info("Return type: {}", returnType);
         logger.info("*********End Runner***************" );
-
+        logger.info("VALUE FROM THE EXTERNAL PROPETIES FIRLE:{}",env.getProperty("dbname"));
     }
 }

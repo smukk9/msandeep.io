@@ -52,6 +52,7 @@ public class BlogApplicationRunner implements ApplicationRunner  {
 
         Set<Role> userRoles = new HashSet<>();
         Role role =  Role.builder().role("ROLE_ADMIN").build();
+
         userRoles.add(role);
         User user =  User.builder().username(adminName).email("smukk9@gmail.com").password(adminPassword).roles(userRoles).active(1).build();
         userService.save(user);

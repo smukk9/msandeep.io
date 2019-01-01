@@ -23,7 +23,8 @@ import java.util.Set;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "user_tb_seq", sequenceName = "user_tb_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_tb_seq")
     @Column(name = "user_id")
     @NotNull
     private int id;

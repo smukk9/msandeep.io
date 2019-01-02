@@ -1,6 +1,7 @@
 buildscript {
 	ext {
 		springBootVersion = '1.5.9.RELEASE'
+		lombokVersion = '1.18.4'
 	}
 	repositories {
 		mavenCentral()
@@ -8,6 +9,7 @@ buildscript {
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
 		classpath 'se.transmode.gradle:gradle-docker:1.2'
+
 	}
 }
 
@@ -30,17 +32,17 @@ repositories {
 
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-data-jpa')
-	compile('org.springframework.boot:spring-boot-starter-security')
-	compile('org.springframework.boot:spring-boot-starter-web')
-	runtime('org.springframework.boot:spring-boot-devtools')
-	compileOnly('org.projectlombok:lombok')
+	compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+	compile 'org.springframework.boot:spring-boot-starter-security'
+	compile 'org.springframework.boot:spring-boot-starter-web'
+	runtime 'org.springframework.boot:spring-boot-devtools'
+// https://mvnrepository.com/artifact/org.projectlombok/lombok
+	compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.4'
+	annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+
 	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.8.0'
     compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.8.0'
-	runtime('com.h2database:h2')
-d
-
-
+	runtime 'com.h2database:h2'
 	compile("org.springframework.boot:spring-boot-starter-actuator")
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('org.springframework.security:spring-security-test')
@@ -57,6 +59,9 @@ d
 	// https://mvnrepository.com/artifact/postgresql/postgresql
 	compile group: 'postgresql', name: 'postgresql', version: '9.1-901-1.jdbc4'
 
+	//to work with java 9
+	// https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
+	compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.2.4'
 
 }
 

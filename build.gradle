@@ -59,9 +59,7 @@ dependencies {
 	// https://mvnrepository.com/artifact/postgresql/postgresql
 	compile group: 'postgresql', name: 'postgresql', version: '9.1-901-1.jdbc4'
 
-	//to work with java 9
-	// https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
-	compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.2.4'
+	
 
 }
 

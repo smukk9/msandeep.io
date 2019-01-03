@@ -25,7 +25,7 @@ import java.util.*;
  */
 
 @Component
-public class BlogApplicationRunner implements ApplicationRunner  {
+public class    BlogApplicationRunner implements ApplicationRunner  {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     

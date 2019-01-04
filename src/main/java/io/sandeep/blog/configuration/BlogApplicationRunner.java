@@ -86,6 +86,6 @@ public class    BlogApplicationRunner implements ApplicationRunner  {
         logger.info("saved article : {}", article1);
        logger.info("Return type: {}", returnType);
         logger.info("*********End Runner***************" );
-        logger.info("VALUE FROM THE EXTERNAL PROPETIES FIRLE:{}",env.getProperty("dbname"));
+        logger.info("VALUE FROM THE EXTERNAL PROPETIES FIRLE:{}",env.getProperty("ADMINUSER"));
     }
 }

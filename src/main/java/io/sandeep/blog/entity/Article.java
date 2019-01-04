@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -21,7 +22,8 @@ import java.util.List;
 public class Article {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "article_article_id_seq", sequenceName = "article_article_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "article_article_id_seq")
     @Column(name = "article_id")
     @NotNull
     protected int id;
@@ -36,7 +38,7 @@ public class Article {
     private String content;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
     @JsonIgnore
     protected User author;
 

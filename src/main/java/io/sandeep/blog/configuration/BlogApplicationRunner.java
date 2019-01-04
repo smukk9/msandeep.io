@@ -10,7 +10,7 @@ import io.sandeep.blog.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-    import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -25,10 +25,10 @@ import java.util.*;
  */
 
 @Component
-public class    BlogApplicationRunner implements ApplicationRunner  {
+public class BlogApplicationRunner implements ApplicationRunner {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    
+
     @Autowired
     private UserService userService;
 
@@ -42,50 +42,56 @@ public class    BlogApplicationRunner implements ApplicationRunner  {
     private Environment env;
 
 
-
     @Override
     public void run(ApplicationArguments args) throws Exception {
 
-        String adminName = env.getProperty("ADMINUSER");
-        String adminPassword = env.getProperty("ADMINPASSWORD");
-        logger.info("********Runner*************:");
 
-        Set<Role> userRoles = new HashSet<>();
-        Role role =  Role.builder().role("ROLE_ADMIN").build();
+        logger.info("Starting Application Runner");
+        String adminName = env.getProperty("ADMIN_USER");
+        String adminPassword = env.getProperty("ADMIN_PASSWORD");
+        String adminEmail = env.getProperty("ADMIN_EMAIL");
 
-        userRoles.add(role);
-        User user =  User.builder().username(adminName).email("smukk9@gmail.com").password(adminPassword).roles(userRoles).active(1).build();
-        userService.save(user);
-        logger.info("***********User setup complete**********");
-        logger.info(": User that is saved{}", user);
+        //Check if username exists in DB
+        if (userService.findByUserName(adminName).isPresent()) {
+            String email = userService.findByUserName(adminName).get().getEmail();
+            logger.info("user exists with username : {}", email);
+        } else {
+            logger.info("Creating new admin user:{}", adminName);
+            Set<Role> userRoles = new HashSet<>();
+            Role role = Role.builder().role("ROLE_ADMIN").build();
+            userRoles.add(role);
+            User user = User.builder().username(adminName).email("ADMIN_EMAIL").password(adminPassword).roles(userRoles).active(1).build();
+            userService.save(user);
+            logger.info(": User that is saved{}", user);
 
-        logger.info("*****Seeding article data************ ");
+            logger.info("*****Seeding article data************ ");
 
-        List<Tag> tagList = new LinkedList<>();
-        Tag spring = Tag.builder().tagName("Spring").build();
-        Tag springboot = Tag.builder().tagName("SpringBoot").build();
+            List<Tag> tagList = new LinkedList<>();
+            Tag spring = Tag.builder().tagName("Spring").build();
+            Tag springboot = Tag.builder().tagName("SpringBoot").build();
 
-        tagList.add(spring);
-        tagList.add(springboot);
-
-
-        tagRepository.save(spring);
-        tagRepository.save(springboot);
-
-        Article article1 = Article.builder()
-                .author(user)
-                .title("Learn SpringBoot with me ")
-                .content("Trying learning lorem is the works is the kdiend infn dlldfjjnfdknffnl lkehduda")
-                .tags(tagList)
-                .build();
+            tagList.add(spring);
+            tagList.add(springboot);
 
 
-        logger.info("user with the error: {}",article1 );
-        Article returnType= articleService.save(article1);
+            tagRepository.save(spring);
+            tagRepository.save(springboot);
 
-        logger.info("saved article : {}", article1);
-       logger.info("Return type: {}", returnType);
-        logger.info("*********End Runner***************" );
-        logger.info("VALUE FROM THE EXTERNAL PROPETIES FIRLE:{}",env.getProperty("ADMINUSER"));
+            Article article1 = Article.builder()
+                    .author(user)
+                    .title("Learn SpringBoot with me ")
+                    .content("Trying learning lorem is the works is the kdiend infn dlldfjjnfdknffnl lkehduda")
+                    .tags(tagList)
+                    .build();
+
+
+            logger.info("user with the error: {}", article1);
+            Article returnType = articleService.save(article1);
+
+            logger.info("saved article : {}", article1);
+            logger.info("Return type: {}", returnType);
+            logger.info("*********End Runner***************");
+
+        }
     }
 }

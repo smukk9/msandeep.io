@@ -58,9 +58,9 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Optional<Article> getArticleById(int id) {
 
-        Optional<Article> article= articleRepository.findById(id);
-        logger.info("Requested article : {}", article );
-            return article;
+        Optional<Article> article = articleRepository.findById(id);
+        logger.info("Requested article : {}", article);
+        return article;
     }
 
     @Override
@@ -75,18 +75,18 @@ public class ArticleServiceImpl implements ArticleService {
         check the jsonNode, validate and save the article .
      */
 
-    public Article saveJsonArticle(JsonNode  article) {
+    public Article saveJsonArticle(JsonNode article) {
 
         Authentication authentication = authenticationFacade.getAuthentication();
-        Optional<String > username = Optional.ofNullable(authentication.getName());
+        Optional<String> username = Optional.ofNullable(authentication.getName());
 
         User user;
-        if(!username.isPresent()){
-            logger.info("checking  the if:{}",username.isPresent());
-             user = userRepository.findByUsername(username.get());
-        }else{
+        if (!username.isPresent()) {
+            logger.info("checking  the if:{}", username.isPresent());
+            user = userRepository.findByUsername(username.get()).get();
+        } else {
             logger.info("checking else the if");
-             user = userRepository.findByUsername("smukk9");
+            user = userRepository.findByUsername("smukk9").get();
         }
 
 
@@ -100,13 +100,11 @@ public class ArticleServiceImpl implements ArticleService {
                 logger.info("Retrieved tag from DB: {}", tag);
                 tag.ifPresent(tagSet::add);
             }
-        }else
-        {
+        } else {
             Optional<Tag> tag = tagRepository.findById(tagCount.get("id").asInt());
             logger.info("Retrieved tag from DB: {}", tag);
             tag.ifPresent(tagSet::add);
         }
-
 
 
         Article newArticle = Article.builder()
@@ -117,21 +115,21 @@ public class ArticleServiceImpl implements ArticleService {
                 .build();
 
         logger.info("Saved Article is: {}", newArticle);
-        return  articleRepository.save(newArticle);
+        return articleRepository.save(newArticle);
 
     }
 
     @Override
-    public Article save(Article article){
-        return  articleRepository.save(article);
+    public Article save(Article article) {
+        return articleRepository.save(article);
     }
 
     @Override
-    public ArrayNode  getarchives() throws JsonProcessingException {
+    public ArrayNode getarchives() throws JsonProcessingException {
 
         //get all articles
         List<Article> allArts = articleRepository.findAll();
-        logger.info("all articles for archives: {}",allArts );
+        logger.info("all articles for archives: {}", allArts);
 
         ArrayNode arrayNode = mapper.createArrayNode();
         HashMap<Integer, List<Article>> archives = new HashMap<>();
@@ -139,23 +137,23 @@ public class ArticleServiceImpl implements ArticleService {
         for (Article article : allArts) {
 
             //get Year of the article
-            Date fullDate=article.getCreateDate();
+            Date fullDate = article.getCreateDate();
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(fullDate);
             int year = calendar.get(Calendar.YEAR);
 
-            if(archives.containsKey(year)){
+            if (archives.containsKey(year)) {
 
                 //get the list
                 List<Article> key_value = archives.get(year);
                 key_value.add(article);
-            }else{
+            } else {
                 List<Article> article_value = new LinkedList<>();
-                boolean check =    article_value.add(article);
+                boolean check = article_value.add(article);
                 if (check) {
                     archives.put(year, article_value);
-                }else {
-                    logger.error("failed to add article: {}",article.getId() );
+                } else {
+                    logger.error("failed to add article: {}", article.getId());
                 }
             }
 
@@ -163,19 +161,19 @@ public class ArticleServiceImpl implements ArticleService {
 
         //i dont like this, but for now lets get with it. will find a better way to get it.
 
-            //get string json
-    //    String JsonResponse = mapper.writeValueAsString(archives);
+        //get string json
+        //    String JsonResponse = mapper.writeValueAsString(archives);
 
 
         Iterator it = archives.entrySet().iterator();
-        while (it.hasNext()){
+        while (it.hasNext()) {
 
             ObjectNode archiveNode = mapper.createObjectNode();
-            Map.Entry pair = (Map.Entry)it.next();
-            int year_key = (Integer)(pair.getKey());
-            logger.info("Extract of the key from hasmap: {}",year_key );
+            Map.Entry pair = (Map.Entry) it.next();
+            int year_key = (Integer) (pair.getKey());
+            logger.info("Extract of the key from hasmap: {}", year_key);
             String JsonResponse = mapper.writeValueAsString(pair.getValue());
-            archiveNode.put("year",year_key);
+            archiveNode.put("year", year_key);
             archiveNode.put("articleArray", JsonResponse);
             arrayNode.add(archiveNode);
         }
@@ -186,27 +184,27 @@ public class ArticleServiceImpl implements ArticleService {
 
     //get the lates article
     @Override
-    public List<Article> getLastestPageable(){
+    public List<Article> getLastestPageable() {
 
-        Pageable pageable = new PageRequest(0,6, Sort.Direction.ASC,"createDate");
+        Pageable pageable = new PageRequest(0, 6, Sort.Direction.ASC, "createDate");
         Page<Article> topArticle = articleRepository.findAll(pageable);
-        return  topArticle.getContent();
+        return topArticle.getContent();
     }
 
-    public Article UpdateJsonArticle(JsonNode  article) {
+    public Article UpdateJsonArticle(JsonNode article) {
 
         //Update : get user
 
         Authentication authentication = authenticationFacade.getAuthentication();
-        Optional<String > username = Optional.ofNullable(authentication.getName());
+        Optional<String> username = Optional.ofNullable(authentication.getName());
 
         User user;
-        if(!username.isPresent()){
-            logger.info("checking  update json  if:{}",username.isPresent());
-            user = userRepository.findByUsername(username.get());
-        }else{
+        if (!username.isPresent()) {
+            logger.info("checking  update json  if:{}", username.isPresent());
+            user = userRepository.findByUsername(username.get()).get();
+        } else {
             logger.info("checking else the if");
-            user = userRepository.findByUsername("smukk9");
+            user = userRepository.findByUsername("smukk9").get();
         }
 
         int id = article.get("id").asInt();
@@ -214,29 +212,28 @@ public class ArticleServiceImpl implements ArticleService {
         JsonNode tagCount = article.get(JsonKeys.TAGS.getValue());
         logger.info("JsonNode update request the request: {}", tagCount);
         List<Tag> tagSet = new LinkedList<>();
-       // List<Tag> existingTags = updateArticle.get().getTags();
+        // List<Tag> existingTags = updateArticle.get().getTags();
         if (tagCount.isArray()) {
             for (final JsonNode objNode : tagCount) {
 
 
-                String cleanTag = objNode.toString().substring(1, objNode.toString().length()-1);
+                String cleanTag = objNode.toString().substring(1, objNode.toString().length() - 1);
                 logger.info("Tag not present checking for arraay condit, updating the tags:{}", cleanTag);
                 Tag tag = tagRepository.findByTagName(cleanTag);
 
-                    logger.info("Retirived tag: {}", tag);
-                    tagSet.add(tag);
+                logger.info("Retrived tag: {}", tag);
+                tagSet.add(tag);
 
 
             }
-        }else
-        {
+        } else {
 
-            String putTag=tagCount.get(0).toString().substring(1,tagCount.get(0).toString().length()-1);
-            logger.info("Tag not present, updating the tags:{}",putTag);
+            String putTag = tagCount.get(0).toString().substring(1, tagCount.get(0).toString().length() - 1);
+            logger.info("Tag not present, updating the tags:{}", putTag);
             Tag tag = tagRepository.findByTagName(putTag);
 
 
-                tagSet.add(tag);
+            tagSet.add(tag);
 
         }
 
@@ -253,7 +250,7 @@ public class ArticleServiceImpl implements ArticleService {
 //                .build();
 
         logger.info("Update Article : {}", updateArticle.get());
-        return  articleRepository.save(updateArticle.get());
+        return articleRepository.save(updateArticle.get());
 
     }
 }

@@ -18,7 +18,8 @@ import java.util.*;
 public class Tag {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "tag_tag_id_seq", sequenceName = "tag_tag_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tag_tag_id_seq")
     @Column(name = "tag_id")
     @NotNull
     private int id;

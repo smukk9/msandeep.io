@@ -21,7 +21,8 @@ import java.util.Date;
 public class Role {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "role_role_id_seq", sequenceName = "role_role_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_role_id_seq")
     @Column(name = "role_id")
     @NotNull
     private int id;

@@ -69,5 +69,6 @@ distDocker {
 	applicationName = 'app'
 	tag  = 'smukk9/msandeep-io'
 	tagVersion = '1.0'
-	setEnvironment 'JAVA_OPTS', '-Dspring.profiles.active=docker'
+	addFile('/home/sandeep/Desktop/external.properties','external.properties')
+	setEnvironment 'JAVA_OPTS', '-Dspring.profiles.active=DOCKER'
 }

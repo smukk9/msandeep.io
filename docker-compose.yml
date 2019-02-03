@@ -1,36 +1,14 @@
 version : '3'
 services:
-  mio-mysql:
-    image: smukk9/mysql-msandeep-io
-    expose:
-      - 3306
-    environment:
-      MYSQL_DATABASE: demo
-      MYSQL_PASSWORD: dbp4ss
-      MYSQL_USER: dbuser
-      MYSQL_DATABASE: demo
-      MYSQL_ROOT_PASSWORD: p4SSW0rd
-      DEFAULT_AUTHENTICATION_PLUGIN: mysql_native_password
-    container_name: mio-mysql
-    volumes:
-      - mio-mysql-volume:/var/lib/mysql
-
   mio-app:
-    image: smukk9/msandeep-io:1.0
+    image: smukk9/app-msandeep.io:2.0
     expose:
       - 80
     environment:
       VIRTUAL_HOST: msandeep.io
       LETSENCRYPT_HOST: msandeep.io
       LETSENCRYPT_EMAIL: smukk9@gmail.com
-    links:
-      - mio-mysql
-    depends_on:
-      - mio-mysql
     container_name: mio-app
-volumes:
-    mio-mysql-volume:
-      external: true
 
 networks:
       default:

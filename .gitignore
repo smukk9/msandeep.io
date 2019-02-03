@@ -2,6 +2,13 @@
 /build/
 !gradle/wrapper/gradle-wrapper.jar
 /out/
+/Docker/
+/deploy/cloud_sql_proxy
+/deploy/todo.txt
+/deploy/credential.json
+/deploy/external.properties
+/deploy/msandee*
+
 ### STS ###
 .apt_generated
 .classpath

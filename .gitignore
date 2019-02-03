@@ -4,7 +4,7 @@
 /out/
 /Docker/
 /cloud_sql_proxy/
-/deploy/credentials.json
+/deploy/credential.json
 /deploy/external.properties
 /deploy/msandee*
 

@@ -3,7 +3,8 @@
 !gradle/wrapper/gradle-wrapper.jar
 /out/
 /Docker/
-/cloud_sql_proxy
+/deploy/cloud_sql_proxy
+/deploy/todo.txt
 /deploy/credential.json
 /deploy/external.properties
 /deploy/msandee*

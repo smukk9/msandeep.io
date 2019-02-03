@@ -13,7 +13,7 @@ import org.springframework.core.env.Environment;
 import javax.sql.DataSource;
 
 @Configuration
-@Profile("PROD")
+@Profile("DOCKER")
 public class DatasourceConfig {
 
     @Autowired

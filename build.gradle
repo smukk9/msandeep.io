@@ -63,12 +63,31 @@ dependencies {
 
 }
 
-distDocker {
-	exposePort 8080
-	push = project.hasProperty('push')
-	applicationName = 'app'
-	tag  = 'smukk9/msandeep-io'
-	tagVersion = '1.0'
-	addFile('/home/sandeep/Desktop/external.properties','external.properties')
-	setEnvironment 'JAVA_OPTS', '-Dspring.profiles.active=DOCKER'
+task buildDocker(type: Docker){
+	push=false
+	applicationName = jar.baseName
+	dockerfile = file('Dockerfile')
+	doFirst {
+		copy{
+			from jar
+			into stageDir
+		}
+
+	}
 }
+
+
+//distDocker {
+//	//def entrypoint=["-Dspring.config.location=external.properties"]
+//	exposePort 8080
+//	push = project.hasProperty('push')
+//	applicationName = 'app'
+//	tag  = 'smukk9/msandeep-io'
+//	tagVersion = '1.0'
+//	addFile('/home/sandeep/Desktop/external.properties','external.properties')
+//	setEnvironment 'JAVA_OPTS', '-Dspring.profiles.active=DOCKER,-Dspring.config.location=external.properties	'
+//
+//}
+
+
+
